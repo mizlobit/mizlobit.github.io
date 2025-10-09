@@ -2,9 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DEMAKOV_AI_AVATAR — цифровые клоны и автоматизация контента</title>
-  <meta name="description" content="Создаём цифровые клоны, которые ускоряют производство контента. DEMAKOV_AI_AVATAR — визуалы, аватары, монтаж, генерация и сопровождение." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DEMAKOV_AI_AVATAR — цифровые клоны и продакшн контента</title>
+  <meta name="description" content="Цифровые клоны, которые ускоряют производство контента: аватар, сценарии, монтаж, генерация и сопровождение." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%230af%22/></svg>">
+
   <style>
     :root{
       --bg:#03060a; --bg2:#051019; --card:#0a121a; --muted:#8aa0bb; --text:#eaf2ff;
@@ -12,7 +14,7 @@
       --rad:20px; --shadow:0 12px 40px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box}
-    html,body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    html,body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
     body{
       color:var(--text);
       background:
@@ -21,209 +23,213 @@
         linear-gradient(180deg, var(--bg), var(--bg2) 50%, var(--bg));
       scroll-behavior:smooth;
     }
-    a{color:var(--accent); text-decoration:none}
+    a{color:var(--accent);text-decoration:none}
 
     /* Header */
-    header{position:sticky; top:0; z-index:30; backdrop-filter:saturate(130%) blur(10px); background:rgba(3,6,10,.55); border-bottom:1px solid #142435}
-    .wrap{max-width:1120px; margin:0 auto; padding:0 18px}
-    .row{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(130%) blur(10px);background:rgba(3,6,10,.55);border-bottom:1px solid #142435}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+    .header-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
+    .logoTitle{font-weight:900;letter-spacing:.6px;color:#cfe9ff;text-transform:uppercase;white-space:nowrap}
 
     /* Buttons */
-    .btn{position:relative; display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:14px; border:1px solid #173245; background:linear-gradient(90deg,#66e1ff,#22c55e); color:#041018; font-weight:800; letter-spacing:.2px; box-shadow:var(--shadow); cursor:pointer; overflow:hidden; transition:transform .25s ease, filter .25s ease}
-    .btn:hover{transform:translateY(-1px) scale(1.01); filter:saturate(1.1)}
-    .btn.ghost{background:transparent; color:var(--text)}
-    .btn::before{content:""; position:absolute; inset:-40% -20%; background:conic-gradient(from 0deg,#fff3,#0000 30%,#fff2 60%,#0000); transform:translateX(-100%); transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+    .btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;border:1px solid #173245;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:800;letter-spacing:.2px;box-shadow:var(--shadow);cursor:pointer;overflow:hidden;transition:transform .25s ease,filter .25s ease}
+    .btn:hover{transform:translateY(-1px) scale(1.01);filter:saturate(1.1)}
+    .btn.ghost{background:transparent;color:var(--text)}
+    .btn::before{content:"";position:absolute;inset:-40% -20%;background:conic-gradient(from 0deg,#fff3,#0000 30%,#fff2 60%,#0000);transform:translateX(-100%);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
     .btn:hover::before{transform:translateX(0)}
-    .ripple{position:absolute; border-radius:50%; transform:scale(0); background:#fff5; animation:ripple .6s ease-out; pointer-events:none}
-    @keyframes ripple{to{transform:scale(12); opacity:0}}
-
-    /* Floating CTA */
-    .fab{position:fixed; right:18px; bottom:18px; z-index:60; display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:999px; background:linear-gradient(90deg,#66e1ff,#22c55e); color:#041018; font-weight:900; border:1px solid #173245; box-shadow:0 12px 30px #0008; animation:breathe 2.8s ease-in-out infinite}
-    .fab svg{width:20px; height:20px}
-    @keyframes breathe{0%{transform:translateY(0)}50%{transform:translateY(-1px)}100%{transform:translateY(0)}}
+    .ripple{position:absolute;border-radius:50%;transform:scale(0);background:#fff5;animation:ripple .6s ease-out;pointer-events:none}
+    @keyframes ripple{to{transform:scale(12);opacity:0}}
 
     /* Sections */
-    section{opacity:0; transform:translateY(18px); transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); margin:70px 0}
-    section.visible{opacity:1; transform:translateY(0)}
+    section{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);margin:70px 0}
+    section.visible{opacity:1;transform:translateY(0)}
 
-    /* HERO */
-    .hero{display:grid; place-items:center; text-align:center; padding:90px 0 40px}
-    h1{font-size:48px; line-height:1.05; margin:0 0 12px}
-    .sub{font-size:18px; color:#cfe3ff}
-
-    /* Neon logo */
-    .logoBox{display:grid; place-items:center; margin:18px auto 8px}
-    .neon{width:220px; height:220px; filter:drop-shadow(0 0 32px #66e1ff66)}
-    .logoTitle{font-weight:900; font-size:18px; letter-spacing:.6px; color:#cfe9ff; text-transform:uppercase}
+    /* Hero */
+    .hero{display:grid;place-items:center;text-align:center;padding:90px 0 40px}
+    h1{font-size:48px;line-height:1.05;margin:0 0 12px}
+    .sub{font-size:18px;color:#cfe3ff}
 
     /* Cards */
-    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-    .card{background:linear-gradient(180deg,#0b131b,#0a1118); border:1px solid #142435; border-radius:var(--rad); padding:18px; box-shadow:var(--shadow)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg,#0b131b,#0a1118);border:1px solid #142435;border-radius:var(--rad);padding:18px;box-shadow:var(--shadow)}
     .card h3{margin-top:0}
 
-    /* Gallery + animated scan */
-    .gallery{display:grid; grid-template-columns:1.2fr .8fr; gap:18px}
-    .imgcard{position:relative; overflow:hidden; border-radius:var(--rad); border:1px solid #142435; background:#081018}
-    .imgcard img{width:100%; height:100%; object-fit:cover; display:block; filter:contrast(1.05) saturate(1.05)}
-    .scanGrid{position:absolute; inset:0; background-image:linear-gradient(#66e1ff22 1px, transparent 1px), linear-gradient(90deg,#66e1ff22 1px, transparent 1px); background-size:36px 36px; mix-blend:screen; opacity:.65; animation:scan 5s linear infinite}
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .imgcard{position:relative;overflow:hidden;border-radius:var(--rad);border:1px solid #142435;background:#081018}
+    .imgcard video{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.05) saturate(1.05);background:#061018}
+    .scanGrid{position:absolute;inset:0;background-image:linear-gradient(#66e1ff22 1px,transparent 1px),linear-gradient(90deg,#66e1ff22 1px,transparent 1px);background-size:36px 36px;mix-blend:screen;opacity:.65;animation:scan 5s linear infinite}
     @keyframes scan{0%{background-position:0 0,0 0}100%{background-position:0 2000px,2000px 0}}
 
     /* Pricing */
     .price b{font-size:26px}
-    .old{color:#92a6c2; text-decoration:line-through; font-size:14px}
+    .old{color:#92a6c2;text-decoration:line-through;font-size:14px}
 
-    /* CTA section */
-    .cta{background:linear-gradient(180deg,#0b141e,#0a121a); border:1px solid #142435; border-radius:24px; padding:24px; box-shadow:var(--shadow); text-align:center}
+    /* CTA */
+    .cta{background:linear-gradient(180deg,#0b141e,#0a121a);border:1px solid #142435;border-radius:24px;padding:24px;box-shadow:var(--shadow);text-align:center}
     .cta h3{margin:0 0 8px}
 
     /* Footer */
-    footer{border-top:1px solid #142435; padding:30px 0; color:#8aa0bb; text-align:center}
+    footer{border-top:1px solid #142435;padding:30px 0;color:#8aa0bb;text-align:center}
 
-    @media (max-width:1000px){.cards{grid-template-columns:1fr 1fr} .gallery{grid-template-columns:1fr}}
-    @media (max-width:560px){h1{font-size:36px} .cards{grid-template-columns:1fr}}
-    /* videos in gallery */
-    .imgcard video{width:100%; height:100%; object-fit:cover; display:block; filter:contrast(1.05) saturate(1.05)}
+    /* Floating button */
+    .fab{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900;border:1px solid #173245;box-shadow:0 12px 30px #0008;animation:breathe 2.8s ease-in-out infinite}
+    @keyframes breathe{0%{transform:translateY(0)}50%{transform:translateY(-1px)}100%{transform:translateY(0)}}
+
+    /* Burger + drawer */
+    .header-actions{display:flex;align-items:center;gap:12px}
+    .burger{display:none;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid #173245;background:transparent;color:var(--text);font-weight:800;cursor:pointer}
+    .burger:active{transform:translateY(1px)}
+    .nav-drawer{position:fixed;inset:0;z-index:70;pointer-events:none}
+    .nav-drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s ease}
+    .nav-drawer .panel{position:absolute;right:0;top:0;height:100%;width:min(84vw,360px);background:linear-gradient(180deg,#0b141e,#0a121a);border-left:1px solid #142435;padding:18px;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);box-shadow:-10px 0 30px #0007;display:flex;flex-direction:column;gap:10px}
+    .nav-drawer .navlink{display:block;padding:12px 14px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:var(--text)}
+    .nav-drawer .navlink.primary{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900}
+    .nav-drawer.open{pointer-events:auto}
+    .nav-drawer.open .backdrop{opacity:1}
+    .nav-drawer.open .panel{transform:translateX(0)}
+
+    /* Mobile tweaks */
+    @media (max-width:768px){
+      header .header-actions{display:none}
+      .burger{display:inline-flex;z-index:60}
+      .logoTitle{font-size:12px;letter-spacing:.2px;max-width:48vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .hero{padding:56px 0 24px}
+      h1{font-size:clamp(24px,6vw,34px)}
+      .sub{font-size:14px}
+      .cards{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr}
+      .btn{padding:8px 12px;border-radius:12px;font-weight:700}
+      .btn::before{display:none}
+      .fab{right:12px;bottom:12px;padding:12px 14px}
+    }
+
+    a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:12px}
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
-    <div class="wrap row" style="padding:10px 18px">
-      <div class="row" style="gap:12px">
-        <div class="logoBox" style="margin:0">
-          <!-- Animated neon logo -->
-          <svg class="neon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="DEMAKOV_AI_AVATAR">
-            <defs>
-              <radialGradient id="rg" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#66e1ff" stop-opacity="1"/>
-                <stop offset="80%" stop-color="#66e1ff" stop-opacity=".2"/>
-                <stop offset="100%" stop-color="#66e1ff" stop-opacity="0"/>
-              </radialGradient>
-              <linearGradient id="lg" x1="0" x2="1">
-                <stop stop-color="#66e1ff"/>
-                <stop offset="1" stop-color="#22c55e"/>
-              </linearGradient>
-            </defs>
-            <circle cx="100" cy="100" r="86" stroke="url(#lg)" stroke-width="5" fill="none">
-              <animate attributeName="stroke-dasharray" values="20 540; 120 440; 20 540" dur="9s" repeatCount="indefinite"/>
-            </circle>
-            <text x="50%" y="53%" text-anchor="middle" fill="#d8f7ff" font-size="22" font-weight="900" style="letter-spacing:2px">DEMAKOV</text>
-            <text x="50%" y="69%" text-anchor="middle" fill="#bdfcff" font-size="16" font-weight="800">AI AVATAR</text>
-            <circle cx="100" cy="100" r="70" fill="url(#rg)" opacity=".12"/>
-          </svg>
-        </div>
-        <div class="logoTitle">DEMAKOV_AI_AVATAR</div>
-      </div>
-      <div class="row">
+    <div class="wrap header-line">
+      <div class="logoTitle">DEMAKOV_AI_AVATAR</div>
+
+      <div class="header-actions">
         <a class="btn ghost" href="#advantages"><span>Преимущества</span></a>
         <a class="btn ghost" href="#pricing"><span>Тарифы</span></a>
         <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Связаться в TG</span></a>
       </div>
+
+      <button class="burger" aria-controls="navDrawer" aria-expanded="false" aria-label="Открыть меню">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Меню</span>
+      </button>
     </div>
   </header>
 
+  <!-- Mobile drawer -->
+  <div id="navDrawer" class="nav-drawer" aria-hidden="true">
+    <div class="backdrop"></div>
+    <nav class="panel" role="menu">
+      <a class="navlink" href="#advantages" role="menuitem">Преимущества</a>
+      <a class="navlink" href="#pricing" role="menuitem">Тарифы</a>
+      <a class="navlink primary" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" role="menuitem">Связаться в Telegram</a>
+    </nav>
+  </div>
+
   <main class="wrap">
+    <!-- HERO -->
     <section class="hero">
       <h1>Цифровые клоны для быстрого и красивого контента</h1>
-      <p class="sub">Аватар, сценарии, монтаж и сопровождение. Нейтральный голубой неон без «кислоты», 3D‑ощущение и чистая типографика.</p>
-      <div class="row" style="gap:10px; margin-top:12px">
+      <p class="sub">Аватар, сценарии, монтаж и сопровождение. Нейтральный голубой неон, 3D-ощущение и чистая типографика.</p>
+      <div class="header-actions" style="gap:10px;justify-content:center">
         <a class="btn" href="#pricing"><span>Смотреть цены</span></a>
         <a class="btn ghost" href="#gallery"><span>Визуал</span></a>
         <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Заказать в Telegram</span></a>
       </div>
     </section>
 
-    <!-- Преимущества -->
+    <!-- Advantages -->
     <section id="advantages">
       <h2>Преимущества цифрового клона</h2>
       <div class="cards">
-        <article class="card"><h3>Экономия времени</h3><p>15–30 роликов за цикл без повторных съёмок. Быстрое обновление текстов и CTA.</p><a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Связаться</span></a></article>
-        <article class="card"><h3>Стабильный образ</h3><p>Единый голос и визуал — контент ровный и узнаваемый, без «скачков» качества.</p><a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Заказать</span></a></article>
-        <article class="card"><h3>Снижение бюджета</h3><p>Меньше затрат на локации, реквизит и пересъём. Подписка и аватар окупаются тиражом.</p><a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Уточнить</span></a></article>
-        <article class="card"><h3>Скорость релизов</h3><p>Параллельная генерация и чёткие дедлайны. Публикации выходят по плану.</p><a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Связаться</span></a></article>
-        <article class="card"><h3>Мультиязычность</h3><p>Озвучка и субтитры под RU/EN/TH и др. Вы легко расширяете охват.</p><a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Заказать</span></a></article>
-        <article class="card"><h3>Гибкость сценариев</h3><p>A/B‑тесты форматов и офферов, отдельные версии под сегменты и площадки.</p><a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Обсудить</span></a></article>
+        <article class="card"><h3>Экономия времени</h3><p>15–30 роликов за цикл без повторных съёмок. Быстрое обновление текстов и CTA.</p></article>
+        <article class="card"><h3>Стабильный образ</h3><p>Единый голос и визуал — контент ровный и узнаваемый, без «скачков» качества.</p></article>
+        <article class="card"><h3>Снижение бюджета</h3><p>Меньше затрат на локации, реквизит и пересъём. Подписка и аватар окупаются тиражом.</p></article>
+        <article class="card"><h3>Скорость релизов</h3><p>Параллельная генерация и чёткие дедлайны. Публикации выходят по плану.</p></article>
+        <article class="card"><h3>Мультиязычность</h3><p>Озвучка и субтитры под RU/EN/TH и др. Вы легко расширяете охват.</p></article>
+        <article class="card"><h3>Гибкость сценариев</h3><p>A/B-тесты форматов и офферов, отдельные версии под сегменты и площадки.</p></article>
       </div>
     </section>
 
-    <!-- Галерея: "оцифровка лица" и 3D‑фигура -->
+    <!-- Gallery (two videos with dual-source paths) -->
     <section id="gallery">
       <h2>Визуал оцифровки</h2>
       <div class="gallery">
         <div class="imgcard">
-          <video class="heroVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-            <source src="assets/gallery-1.mp4?v=2" type="video/mp4" />
+          <video autoplay muted playsinline webkit-playsinline loop preload="metadata">
+            <!-- Оба пути: с одиночной и двойной папкой -->
+            <source src="assets/gallery-1.mp4?v=3" type="video/mp4" />
+            <source src="assets/assets/gallery-1.mp4?v=3" type="video/mp4" />
           </video>
           <div class="scanGrid" aria-hidden="true"></div>
         </div>
         <div class="imgcard">
-          <video class="heroVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-            <source src="assets/gallery-2.mp4?v=2" type="video/mp4" />
+          <video autoplay muted playsinline webkit-playsinline loop preload="metadata">
+            <source src="assets/gallery-2.mp4?v=3" type="video/mp4" />
+            <source src="assets/assets/gallery-2.mp4?v=3" type="video/mp4" />
           </video>
         </div>
       </div>
     </section>
 
-    <!-- Тарифы (прайс) -->
+    <!-- Pricing -->
     <section id="pricing">
       <h2>Тарифные пакеты</h2>
       <div class="cards">
         <article class="card">
           <h3>МИНИ</h3>
-          <p class="price"><b>15 рилс — 25 000</b> <span class="muted">(≈ 1 666 ₽/рилс)</span></p>
-          <p class="price"><b>30 рилс — 35 000</b> <span class="muted">(≈ 1 166 ₽/рилс)</span></p>
-          <div class="old">Старая цена: 30 000 / 40 000</div>
+          <p class="price"><b>15 рилс — 25 000</b> <span class="muted">(≈ 1 666 ₽/рилс)</span></p>
+          <p class="price"><b>30 рилс — 35 000</b> <span class="muted">(≈ 1 166 ₽/рилс)</span></p>
+          <div class="old">Старая цена: 30 000 / 40 000</div>
           <ul>
-            <li>Регистрация аккаунта</li>
-            <li>Подписка на 1 мес. (~36$)</li>
-            <li>Аватар до 3 шт.</li>
-            <li>Монтаж и озвучка, улучшение звука</li>
-            <li>Генерация ролика</li>
-            <li>Цветокоррекция, субтитры, музыка</li>
-            <li>Сопровождение</li>
-            <li>Нейрофотосессия</li>
+            <li>Регистрация аккаунта</li><li>Подписка на 1 мес. (~36$)</li><li>Аватар до 3 шт.</li>
+            <li>Монтаж и озвучка, улучшение звука</li><li>Генерация ролика</li>
+            <li>Цветокоррекция, субтитры, музыка</li><li>Сопровождение</li><li>Нейрофотосессия</li>
           </ul>
           <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Выбрать МИНИ в TG</span></a>
         </article>
         <article class="card">
           <h3>СТАНДАРТ</h3>
-          <p class="price"><b>15 рилс — 30 000</b> <span class="muted">(≈ 2 000 ₽/рилс)</span></p>
-          <p class="price"><b>30 рилс — 45 000</b> <span class="muted">(≈ 1 500 ₽/рилс)</span></p>
-          <div class="old">Старая цена: 35 000 / 50 000</div>
+          <p class="price"><b>15 рилс — 30 000</b> <span class="muted">(≈ 2 000 ₽/рилс)</span></p>
+          <p class="price"><b>30 рилс — 45 000</b> <span class="muted">(≈ 1 500 ₽/рилс)</span></p>
+          <div class="old">Старая цена: 35 000 / 50 000</div>
           <ul>
-            <li>Регистрация аккаунта</li>
-            <li>Подписка на 1 мес. (~36$)</li>
-            <li>Аватар до 5 шт.</li>
-            <li>Монтаж и озвучка, улучшение звука</li>
-            <li>Генерация роликов</li>
-            <li>Цветокоррекция, субтитры, музыка, переходы</li>
-            <li>Футажи (2–5 шт.)</li>
-            <li>Сопровождение</li>
-            <li>Нейрофотосессия: 15 образов</li>
+            <li>Регистрация аккаунта</li><li>Подписка на 1 мес. (~36$)</li><li>Аватар до 5 шт.</li>
+            <li>Монтаж и озвучка, улучшение звука</li><li>Генерация роликов</li>
+            <li>Цветокоррекция, субтитры, музыка, переходы</li><li>Футажи (2–5 шт.)</li>
+            <li>Сопровождение</li><li>Нейрофотосессия: 15 образов</li>
           </ul>
           <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Выбрать СТАНДАРТ в TG</span></a>
         </article>
         <article class="card">
           <h3>МАКСИ</h3>
-          <p class="price"><b>15 рилс — 40 000</b> <span class="muted">(≈ 2 666 ₽/рилс)</span></p>
-          <p class="price"><b>30 рилс — 65 000</b> <span class="muted">(≈ 2 166 ₽/рилс)</span></p>
-          <div class="old">Старая цена: 50 000 / 75 000</div>
+          <p class="price"><b>15 рилс — 40 000</b> <span class="muted">(≈ 2 666 ₽/рилс)</span></p>
+          <p class="price"><b>30 рилс — 65 000</b> <span class="muted">(≈ 2 166 ₽/рилс)</span></p>
+          <div class="old">Старая цена: 50 000 / 75 000</div>
           <ul>
-            <li>Регистрация аккаунта</li>
-            <li>Подписка на 1 мес. (~36$)</li>
-            <li>Аватар до 10 шт.</li>
-            <li>Монтаж и озвучка, улучшение звука</li>
-            <li>Генерация роликов</li>
-            <li>Цветокоррекция, субтитры, музыка, переходы</li>
-            <li>Футажи каждые 3–5 сек (вставки, гифки, анимация)</li>
-            <li>Сопровождение</li>
-            <li>Нейрофотосессия: 30 образов</li>
+            <li>Регистрация аккаунта</li><li>Подписка на 1 мес. (~36$)</li><li>Аватар до 10 шт.</li>
+            <li>Монтаж и озвучка, улучшение звука</li><li>Генерация роликов</li>
+            <li>Цветокоррекция, субтитры, музыка, переходы</li><li>Футажи каждые 3–5 сек</li>
+            <li>Сопровождение</li><li>Нейрофотосессия: 30 образов</li>
           </ul>
           <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Выбрать МАКСИ в TG</span></a>
         </article>
       </div>
     </section>
 
-    <!-- CTA banner -->
+    <!-- CTA -->
     <section id="contact">
       <div class="cta">
         <h3>Готовы запустить своего цифрового клона?</h3>
@@ -234,30 +240,24 @@
   </main>
 
   <footer>
-    <div class="wrap">
-      © <span id="year"></span> DEMAKOV_AI_AVATAR. Все права защищены.
-    </div>
+    <div class="wrap">© <span id="year"></span> DEMAKOV_AI_AVATAR. Все права защищены.</div>
   </footer>
 
-  <!-- Floating CTA button -->
-  <a class="fab" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" aria-label="Связаться в Telegram">
-    <!-- Telegram icon -->
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21.5 4.5L2.8 11.6c-.9.35-.88 1.65.03 1.96l4.62 1.62 2 4.92c.33.82 1.43.93 1.95.2l2.9-4 4.58 3.36c.78.57 1.9.15 2.1-.8l2.3-12.1c.2-1.06-.82-1.94-1.78-1.46z" fill="#0A0" opacity="0"/><path d="M21.5 4.5L2.8 11.6c-.9.35-.88 1.65.03 1.96l4.62 1.62 2 4.92c.33.82 1.43.93 1.95.2l2.9-4 4.58 3.36c.78.57 1.9.15 2.1-.8l2.3-12.1c.2-1.06-.82-1.94-1.78-1.46z" fill="#0af"/></svg>
-    Заказать в TG
-  </a>
+  <!-- Floating CTA -->
+  <a class="fab" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" aria-label="Связаться в Telegram">Заказать в TG</a>
 
   <script>
-    // Год в футере
+    // год в футере
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Плавные появления секций
+    // появление секций
     const observer = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target);} });
     }, {threshold:.12});
     document.querySelectorAll('section').forEach(s=>observer.observe(s));
 
-    // Ripple на кнопках
-    document.querySelectorAll('.btn, .fab').forEach(btn=>{
+    // ripple на кнопках
+    document.querySelectorAll('.btn,.fab').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
         const r = btn.getBoundingClientRect();
         const circle = document.createElement('span');
@@ -270,25 +270,38 @@
         setTimeout(()=>circle.remove(), 600);
       });
     });
-  </script>
-  <script>
-    // Autoplay/pause videos when in viewport (battery‑friendly)
+
+    // бургер-меню
+    (function(){
+      const burger = document.querySelector('.burger');
+      const drawer = document.getElementById('navDrawer');
+      if(!burger || !drawer) return;
+      const backdrop = drawer.querySelector('.backdrop');
+      const links = drawer.querySelectorAll('a');
+      function openD(){drawer.classList.add('open');burger.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+      function closeD(){drawer.classList.remove('open');burger.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow=''}
+      burger.addEventListener('click', ()=> drawer.classList.contains('open') ? closeD() : openD());
+      backdrop.addEventListener('click', closeD);
+      links.forEach(a=>a.addEventListener('click', closeD));
+      window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeD(); });
+    })();
+
+    // энергосбережение: играем видео только в зоне видимости
     (function(){
       const vids = document.querySelectorAll('.imgcard video');
-      if(!('IntersectionObserver' in window) || vids.length===0) return;
-      const vobs = new IntersectionObserver(entries => {
+      if(!('IntersectionObserver' in window)) return;
+      const io = new IntersectionObserver(entries=>{
         entries.forEach(e=>{
           const v = e.target;
-          if(e.isIntersecting){
-            const p = v.play();
-            if(p && p.catch){ p.catch(()=>{}); }
-          } else {
-            v.pause();
-          }
+          if(e.isIntersecting){ const p = v.play(); if(p && p.catch) p.catch(()=>{}); }
+          else v.pause();
         });
       }, {threshold:.25});
-      vids.forEach(v=>vobs.observe(v));
+      vids.forEach(v=>io.observe(v));
     })();
+
+    // Для формы, если подключишь Formspree/бота
+    const ACTION_URL = '';
   </script>
 </body>
 </html>
