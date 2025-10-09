@@ -43,8 +43,28 @@
     section{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);margin:70px 0}
     section.visible{opacity:1;transform:translateY(0)}
 
-    /* Hero */
-    .hero{display:grid;place-items:center;text-align:center;padding:90px 0 40px}
+    /* HERO — фон с изображением + неон */
+    .hero{
+      display:grid; place-items:center; text-align:center;
+      padding:90px 0 40px;
+      position:relative; isolation:isolate;
+      min-height:58vh; /* раскрываем фон */
+    }
+    .hero > *{ position:relative; z-index:1; }
+    .hero::before{
+      content:""; position:absolute; inset:0; z-index:-1;
+      background-image:url("assets/hero-bg.jpg");
+      background-size:cover; background-position:center;
+      transform:scale(1.02);
+      filter:brightness(.55) saturate(1.08);
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0; z-index:-1;
+      background:
+        radial-gradient(80% 60% at 20% 0% , rgba(102,225,255,.25), transparent 60%),
+        radial-gradient(60% 40% at 85% 15%, rgba(34,197,94,.18), transparent 60%),
+        linear-gradient(180deg, rgba(3,6,10,.15), rgba(3,6,10,.65));
+    }
     h1{font-size:48px;line-height:1.05;margin:0 0 12px}
     .sub{font-size:18px;color:#cfe3ff}
 
@@ -97,7 +117,8 @@
       header .header-actions{display:none}
       .burger{display:inline-flex;z-index:60}
       .logoTitle{font-size:12px;letter-spacing:.2px;max-width:48vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-      .hero{padding:56px 0 24px}
+      .hero{ min-height:56vh; padding:64px 0 24px; }
+      .hero::before{ filter:brightness(.45) saturate(1.05); }
       h1{font-size:clamp(24px,6vw,34px)}
       .sub{font-size:14px}
       .cards{grid-template-columns:1fr}
@@ -167,14 +188,14 @@
       <h2>Визуал оцифровки</h2>
       <div class="gallery">
         <!-- Видео 1 -->
-        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=6" data-src2="assets/assets/gallery-1.mp4?v=6" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
-          <video muted playsinline webkit-playsinline loop preload="metadata"></video>
+        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=8" data-src2="assets/assets/gallery-1.mp4?v=8" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
+          <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
           <div class="poster"><img alt="Превью 1" /></div>
           <button class="sound" type="button">Звук</button>
         </div>
         <!-- Видео 2 -->
-        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=6" data-src2="assets/assets/gallery-2.mp4?v=6" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
-          <video muted playsinline webkit-playsinline loop preload="metadata"></video>
+        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=8" data-src2="assets/assets/gallery-2.mp4?v=8" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
+          <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
           <div class="poster"><img alt="Превью 2" /></div>
           <button class="sound" type="button">Звук</button>
         </div>
@@ -316,7 +337,6 @@
 
         // Скрыть постер, когда реально пошло воспроизведение
         v.addEventListener('playing', ()=>{ posterBox.style.display='none'; });
-        v.addEventListener('pause', ()=>{ /* оставляем постер скрытым */ });
 
         // Кнопка звука
         btn.addEventListener('click', ()=>{
