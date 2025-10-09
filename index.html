@@ -6,7 +6,6 @@
   <title>DEMAKOV_AI_AVATAR — цифровые клоны и продакшн контента</title>
   <meta name="description" content="Цифровые клоны, которые ускоряют производство контента: аватар, сценарии, монтаж, генерация и сопровождение." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%230af%22/></svg>">
-
   <style>
     :root{
       --bg:#03060a; --bg2:#051019; --card:#0a121a; --muted:#8aa0bb; --text:#eaf2ff;
@@ -54,10 +53,11 @@
     .card{background:linear-gradient(180deg,#0b131b,#0a1118);border:1px solid #142435;border-radius:var(--rad);padding:18px;box-shadow:var(--shadow)}
     .card h3{margin-top:0}
 
-    /* Gallery */
+    /* Gallery (video) */
     .gallery{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
     .imgcard{position:relative;overflow:hidden;border-radius:var(--rad);border:1px solid #142435;background:#081018}
-    .imgcard video{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.05) saturate(1.05);background:#061018}
+    .imgcard video,.imgcard img{width:100%;height:100%;object-fit:cover;display:block}
+    .fallback-img{position:absolute;inset:0;display:none}
     .scanGrid{position:absolute;inset:0;background-image:linear-gradient(#66e1ff22 1px,transparent 1px),linear-gradient(90deg,#66e1ff22 1px,transparent 1px);background-size:36px 36px;mix-blend:screen;opacity:.65;animation:scan 5s linear infinite}
     @keyframes scan{0%{background-position:0 0,0 0}100%{background-position:0 2000px,2000px 0}}
 
@@ -152,34 +152,26 @@
 
     <!-- Advantages -->
     <section id="advantages">
-      <h2>Преимущества цифрового клона</h2>
+      <h2>Визуал оцифровки</h2>
       <div class="cards">
         <article class="card"><h3>Экономия времени</h3><p>15–30 роликов за цикл без повторных съёмок. Быстрое обновление текстов и CTA.</p></article>
         <article class="card"><h3>Стабильный образ</h3><p>Единый голос и визуал — контент ровный и узнаваемый, без «скачков» качества.</p></article>
         <article class="card"><h3>Снижение бюджета</h3><p>Меньше затрат на локации, реквизит и пересъём. Подписка и аватар окупаются тиражом.</p></article>
-        <article class="card"><h3>Скорость релизов</h3><p>Параллельная генерация и чёткие дедлайны. Публикации выходят по плану.</p></article>
-        <article class="card"><h3>Мультиязычность</h3><p>Озвучка и субтитры под RU/EN/TH и др. Вы легко расширяете охват.</p></article>
-        <article class="card"><h3>Гибкость сценариев</h3><p>A/B-тесты форматов и офферов, отдельные версии под сегменты и площадки.</p></article>
       </div>
     </section>
 
-    <!-- Gallery (two videos with dual-source paths) -->
+    <!-- Gallery (two videos with robust fallback) -->
     <section id="gallery">
       <h2>Визуал оцифровки</h2>
       <div class="gallery">
-        <div class="imgcard">
-          <video autoplay muted playsinline webkit-playsinline loop preload="metadata">
-            <!-- Оба пути: с одиночной и двойной папкой -->
-            <source src="assets/gallery-1.mp4?v=3" type="video/mp4" />
-            <source src="assets/assets/gallery-1.mp4?v=3" type="video/mp4" />
-          </video>
+        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=4" data-src2="assets/assets/gallery-1.mp4?v=4" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
+          <video muted playsinline webkit-playsinline loop preload="metadata"></video>
+          <img class="fallback-img" alt="Кадр 1 (постер)"/>
           <div class="scanGrid" aria-hidden="true"></div>
         </div>
-        <div class="imgcard">
-          <video autoplay muted playsinline webkit-playsinline loop preload="metadata">
-            <source src="assets/gallery-2.mp4?v=3" type="video/mp4" />
-            <source src="assets/assets/gallery-2.mp4?v=3" type="video/mp4" />
-          </video>
+        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=4" data-src2="assets/assets/gallery-2.mp4?v=4" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
+          <video muted playsinline webkit-playsinline loop preload="metadata"></video>
+          <img class="fallback-img" alt="Кадр 2 (постер)"/>
         </div>
       </div>
     </section>
@@ -286,18 +278,50 @@
       window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeD(); });
     })();
 
-    // энергосбережение: играем видео только в зоне видимости
+    // видео: пытаемся по двум путям, если не получилось — показываем постер
     (function(){
-      const vids = document.querySelectorAll('.imgcard video');
-      if(!('IntersectionObserver' in window)) return;
-      const io = new IntersectionObserver(entries=>{
-        entries.forEach(e=>{
-          const v = e.target;
-          if(e.isIntersecting){ const p = v.play(); if(p && p.catch) p.catch(()=>{}); }
-          else v.pause();
-        });
-      }, {threshold:.25});
-      vids.forEach(v=>io.observe(v));
+      const wraps = document.querySelectorAll('.vidwrap');
+      wraps.forEach(w=>{
+        const v = w.querySelector('video');
+        const img = w.querySelector('.fallback-img');
+        const srcs = [w.dataset.src1, w.dataset.src2].filter(Boolean);
+        const posters = [w.dataset.poster1, w.dataset.poster2].filter(Boolean);
+
+        let idx = 0, tried = 0, played = false;
+
+        function setPoster() {
+          if (posters.length) {
+            img.src = posters[0];
+            img.style.display = 'block';
+          }
+        }
+
+        function trySource(i){
+          if(i >= srcs.length){ setPoster(); return; }
+          v.src = srcs[i]; v.load();
+          const t = setTimeout(()=>{ if(!played && v.readyState < 2){ trySource(i+1);} }, 1800);
+
+          v.onloadeddata = ()=>{ clearTimeout(t); };
+          v.onerror = ()=>{ clearTimeout(t); trySource(i+1); };
+        }
+
+        // lazy play only when visible
+        const io = new IntersectionObserver(es=>{
+          es.forEach(e=>{
+            if(e.isIntersecting){
+              const p = v.play();
+              if(p && p.catch){ p.catch(()=>{}); }
+              io.unobserve(v);
+            }
+          });
+        }, {threshold:.25});
+
+        v.addEventListener('playing', ()=>{ played = true; img.style.display='none'; });
+        v.addEventListener('stalled', ()=>{ if(!played) setPoster(); });
+
+        trySource(0);
+        io.observe(v);
+      });
     })();
 
     // Для формы, если подключишь Formspree/бота
