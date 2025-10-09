@@ -53,13 +53,16 @@
     .card{background:linear-gradient(180deg,#0b131b,#0a1118);border:1px solid #142435;border-radius:var(--rad);padding:18px;box-shadow:var(--shadow)}
     .card h3{margin-top:0}
 
-    /* Gallery (video) */
+    /* Gallery */
     .gallery{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
     .imgcard{position:relative;overflow:hidden;border-radius:var(--rad);border:1px solid #142435;background:#081018}
     .imgcard video,.imgcard img{width:100%;height:100%;object-fit:cover;display:block}
-    .fallback-img{position:absolute;inset:0;display:none}
-    .scanGrid{position:absolute;inset:0;background-image:linear-gradient(#66e1ff22 1px,transparent 1px),linear-gradient(90deg,#66e1ff22 1px,transparent 1px);background-size:36px 36px;mix-blend:screen;opacity:.65;animation:scan 5s linear infinite}
-    @keyframes scan{0%{background-position:0 0,0 0}100%{background-position:0 2000px,2000px 0}}
+
+    /* sound button + poster overlay */
+    .sound{position:absolute;right:12px;bottom:12px;z-index:5;padding:8px 10px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:#eaf2ff;font-weight:800}
+    .sound.active{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018}
+    .poster{position:absolute;inset:0;background:#0a121a;display:flex;align-items:center;justify-content:center}
+    .poster img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.95) saturate(1.05)}
 
     /* Pricing */
     .price b{font-size:26px}
@@ -112,17 +115,13 @@
   <header>
     <div class="wrap header-line">
       <div class="logoTitle">DEMAKOV_AI_AVATAR</div>
-
       <div class="header-actions">
         <a class="btn ghost" href="#advantages"><span>Преимущества</span></a>
         <a class="btn ghost" href="#pricing"><span>Тарифы</span></a>
         <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Связаться в TG</span></a>
       </div>
-
       <button class="burger" aria-controls="navDrawer" aria-expanded="false" aria-label="Открыть меню">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span>Меню</span>
       </button>
     </div>
@@ -152,26 +151,32 @@
 
     <!-- Advantages -->
     <section id="advantages">
-      <h2>Визуал оцифровки</h2>
+      <h2>Преимущества цифрового клона</h2>
       <div class="cards">
         <article class="card"><h3>Экономия времени</h3><p>15–30 роликов за цикл без повторных съёмок. Быстрое обновление текстов и CTA.</p></article>
         <article class="card"><h3>Стабильный образ</h3><p>Единый голос и визуал — контент ровный и узнаваемый, без «скачков» качества.</p></article>
         <article class="card"><h3>Снижение бюджета</h3><p>Меньше затрат на локации, реквизит и пересъём. Подписка и аватар окупаются тиражом.</p></article>
+        <article class="card"><h3>Скорость релизов</h3><p>Параллельная генерация и чёткие дедлайны. Публикации выходят по плану.</p></article>
+        <article class="card"><h3>Мультиязычность</h3><p>Озвучка и субтитры под RU/EN/TH и др. Вы легко расширяете охват.</p></article>
+        <article class="card"><h3>Гибкость сценариев</h3><p>A/B‑тесты форматов и офферов, отдельные версии под сегменты и площадки.</p></article>
       </div>
     </section>
 
-    <!-- Gallery (two videos with robust fallback) -->
+    <!-- Gallery (две видешки с постерами и кнопкой звука) -->
     <section id="gallery">
       <h2>Визуал оцифровки</h2>
       <div class="gallery">
-        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=4" data-src2="assets/assets/gallery-1.mp4?v=4" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
+        <!-- Видео 1 -->
+        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=6" data-src2="assets/assets/gallery-1.mp4?v=6" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
           <video muted playsinline webkit-playsinline loop preload="metadata"></video>
-          <img class="fallback-img" alt="Кадр 1 (постер)"/>
-          <div class="scanGrid" aria-hidden="true"></div>
+          <div class="poster"><img alt="Превью 1" /></div>
+          <button class="sound" type="button">Звук</button>
         </div>
-        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=4" data-src2="assets/assets/gallery-2.mp4?v=4" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
+        <!-- Видео 2 -->
+        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=6" data-src2="assets/assets/gallery-2.mp4?v=6" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
           <video muted playsinline webkit-playsinline loop preload="metadata"></video>
-          <img class="fallback-img" alt="Кадр 2 (постер)"/>
+          <div class="poster"><img alt="Превью 2" /></div>
+          <button class="sound" type="button">Звук</button>
         </div>
       </div>
     </section>
@@ -278,53 +283,54 @@
       window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeD(); });
     })();
 
-    // видео: пытаемся по двум путям, если не получилось — показываем постер
+    // Лоадер видео: 2 пути + постер + кнопка звука + lazy-play
     (function(){
       const wraps = document.querySelectorAll('.vidwrap');
       wraps.forEach(w=>{
         const v = w.querySelector('video');
-        const img = w.querySelector('.fallback-img');
+        const posterBox = w.querySelector('.poster');
+        const posterImg = posterBox.querySelector('img');
+        const btn = w.querySelector('.sound');
         const srcs = [w.dataset.src1, w.dataset.src2].filter(Boolean);
         const posters = [w.dataset.poster1, w.dataset.poster2].filter(Boolean);
 
-        let idx = 0, tried = 0, played = false;
+        // Показать постер сразу
+        if (posters.length) posterImg.src = posters[0];
 
-        function setPoster() {
-          if (posters.length) {
-            img.src = posters[0];
-            img.style.display = 'block';
-          }
-        }
+        // Ленивая автопрокрутка
+        const io = new IntersectionObserver(es=>{
+          es.forEach(e=>{ if(e.isIntersecting){ play(); io.unobserve(v); } });
+        },{threshold:.25});
 
         function trySource(i){
-          if(i >= srcs.length){ setPoster(); return; }
+          if(i>=srcs.length) return; // выходим, постер уже показан
           v.src = srcs[i]; v.load();
-          const t = setTimeout(()=>{ if(!played && v.readyState < 2){ trySource(i+1);} }, 1800);
-
+          const t = setTimeout(()=>{ if(v.readyState < 2) trySource(i+1); }, 1500);
           v.onloadeddata = ()=>{ clearTimeout(t); };
           v.onerror = ()=>{ clearTimeout(t); trySource(i+1); };
         }
 
-        // lazy play only when visible
-        const io = new IntersectionObserver(es=>{
-          es.forEach(e=>{
-            if(e.isIntersecting){
-              const p = v.play();
-              if(p && p.catch){ p.catch(()=>{}); }
-              io.unobserve(v);
-            }
-          });
-        }, {threshold:.25});
+        function play(){
+          const p = v.play(); if(p && p.catch) p.catch(()=>{});
+        }
 
-        v.addEventListener('playing', ()=>{ played = true; img.style.display='none'; });
-        v.addEventListener('stalled', ()=>{ if(!played) setPoster(); });
+        // Скрыть постер, когда реально пошло воспроизведение
+        v.addEventListener('playing', ()=>{ posterBox.style.display='none'; });
+        v.addEventListener('pause', ()=>{ /* оставляем постер скрытым */ });
+
+        // Кнопка звука
+        btn.addEventListener('click', ()=>{
+          v.muted = !v.muted;
+          btn.classList.toggle('active', !v.muted);
+          if(!v.paused){ v.play().catch(()=>{}); }
+        });
 
         trySource(0);
         io.observe(v);
       });
     })();
 
-    // Для формы, если подключишь Formspree/бота
+    // Для формы (если подключишь Formspree/бота)
     const ACTION_URL = '';
   </script>
 </body>
