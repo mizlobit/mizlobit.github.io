@@ -43,27 +43,28 @@
     section{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);margin:70px 0}
     section.visible{opacity:1;transform:translateY(0)}
 
-    /* HERO — фон с изображением + неон */
+    /* HERO — фон-картинка + неон, фиксы для iOS */
     .hero{
       display:grid; place-items:center; text-align:center;
       padding:90px 0 40px;
-      position:relative; isolation:isolate;
-      min-height:58vh; /* раскрываем фон */
+      position:relative; overflow:hidden; z-index:0; /* ключевые фиксы */
+      min-height:58vh;
     }
-    .hero > *{ position:relative; z-index:1; }
+    .hero > *{ position:relative; z-index:2; }
     .hero::before{
-      content:""; position:absolute; inset:0; z-index:-1;
-      background-image:url("assets/hero-bg.jpg");
+      content:""; position:absolute; inset:0; z-index:0;
+      background-image:url("assets/hero-bg.jpg?v=1");
       background-size:cover; background-position:center;
-      transform:scale(1.02);
+      transform:scale(1.03);
       filter:brightness(.55) saturate(1.08);
+      will-change:transform;
     }
     .hero::after{
-      content:""; position:absolute; inset:0; z-index:-1;
+      content:""; position:absolute; inset:0; z-index:1;
       background:
         radial-gradient(80% 60% at 20% 0% , rgba(102,225,255,.25), transparent 60%),
         radial-gradient(60% 40% at 85% 15%, rgba(34,197,94,.18), transparent 60%),
-        linear-gradient(180deg, rgba(3,6,10,.15), rgba(3,6,10,.65));
+        linear-gradient(180deg, rgba(3,6,10,.10), rgba(3,6,10,.65));
     }
     h1{font-size:48px;line-height:1.05;margin:0 0 12px}
     .sub{font-size:18px;color:#cfe3ff}
@@ -179,22 +180,20 @@
         <article class="card"><h3>Снижение бюджета</h3><p>Меньше затрат на локации, реквизит и пересъём. Подписка и аватар окупаются тиражом.</p></article>
         <article class="card"><h3>Скорость релизов</h3><p>Параллельная генерация и чёткие дедлайны. Публикации выходят по плану.</p></article>
         <article class="card"><h3>Мультиязычность</h3><p>Озвучка и субтитры под RU/EN/TH и др. Вы легко расширяете охват.</p></article>
-        <article class="card"><h3>Гибкость сценариев</h3><p>A/B‑тесты форматов и офферов, отдельные версии под сегменты и площадки.</p></article>
+        <article class="card"><h3>Гибкость сценариев</h3><p>A/B-тесты форматов и офферов, отдельные версии под сегменты и площадки.</p></article>
       </div>
     </section>
 
-    <!-- Gallery (две видешки с постерами и кнопкой звука) -->
+    <!-- Gallery -->
     <section id="gallery">
       <h2>Визуал оцифровки</h2>
       <div class="gallery">
-        <!-- Видео 1 -->
-        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=8" data-src2="assets/assets/gallery-1.mp4?v=8" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
+        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=9" data-src2="assets/assets/gallery-1.mp4?v=9" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
           <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
           <div class="poster"><img alt="Превью 1" /></div>
           <button class="sound" type="button">Звук</button>
         </div>
-        <!-- Видео 2 -->
-        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=8" data-src2="assets/assets/gallery-2.mp4?v=8" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
+        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=9" data-src2="assets/assets/gallery-2.mp4?v=9" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
           <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
           <div class="poster"><img alt="Превью 2" /></div>
           <button class="sound" type="button">Звук</button>
@@ -265,16 +264,13 @@
   <a class="fab" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" aria-label="Связаться в Telegram">Заказать в TG</a>
 
   <script>
-    // год в футере
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // появление секций
     const observer = new IntersectionObserver(entries=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target);} });
     }, {threshold:.12});
     document.querySelectorAll('section').forEach(s=>observer.observe(s));
 
-    // ripple на кнопках
     document.querySelectorAll('.btn,.fab').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
         const r = btn.getBoundingClientRect();
@@ -289,7 +285,6 @@
       });
     });
 
-    // бургер-меню
     (function(){
       const burger = document.querySelector('.burger');
       const drawer = document.getElementById('navDrawer');
@@ -304,41 +299,34 @@
       window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeD(); });
     })();
 
-    // Лоадер видео: 2 пути + постер + кнопка звука + lazy-play
     (function(){
       const wraps = document.querySelectorAll('.vidwrap');
       wraps.forEach(w=>{
         const v = w.querySelector('video');
-        const posterBox = w.querySelector('.poster');
+        const posterBox = w.querySelector('div.poster');
         const posterImg = posterBox.querySelector('img');
         const btn = w.querySelector('.sound');
         const srcs = [w.dataset.src1, w.dataset.src2].filter(Boolean);
         const posters = [w.dataset.poster1, w.dataset.poster2].filter(Boolean);
 
-        // Показать постер сразу
         if (posters.length) posterImg.src = posters[0];
 
-        // Ленивая автопрокрутка
         const io = new IntersectionObserver(es=>{
           es.forEach(e=>{ if(e.isIntersecting){ play(); io.unobserve(v); } });
         },{threshold:.25});
 
         function trySource(i){
-          if(i>=srcs.length) return; // выходим, постер уже показан
+          if(i>=srcs.length) return;
           v.src = srcs[i]; v.load();
           const t = setTimeout(()=>{ if(v.readyState < 2) trySource(i+1); }, 1500);
           v.onloadeddata = ()=>{ clearTimeout(t); };
           v.onerror = ()=>{ clearTimeout(t); trySource(i+1); };
         }
 
-        function play(){
-          const p = v.play(); if(p && p.catch) p.catch(()=>{});
-        }
+        function play(){ const p = v.play(); if(p && p.catch) p.catch(()=>{}); }
 
-        // Скрыть постер, когда реально пошло воспроизведение
         v.addEventListener('playing', ()=>{ posterBox.style.display='none'; });
 
-        // Кнопка звука
         btn.addEventListener('click', ()=>{
           v.muted = !v.muted;
           btn.classList.toggle('active', !v.muted);
@@ -349,9 +337,6 @@
         io.observe(v);
       });
     })();
-
-    // Для формы (если подключишь Formspree/бота)
-    const ACTION_URL = '';
   </script>
 </body>
 </html>
