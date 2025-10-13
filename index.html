@@ -43,17 +43,17 @@
     section{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);margin:70px 0}
     section.visible{opacity:1;transform:translateY(0)}
 
-    /* HERO — фон-картинка + неон, фиксы для iOS */
+    /* HERO — фон-картинка + неон */
     .hero{
       display:grid; place-items:center; text-align:center;
       padding:90px 0 40px;
-      position:relative; overflow:hidden; z-index:0; /* ключевые фиксы */
+      position:relative; overflow:hidden; z-index:0;
       min-height:58vh;
     }
     .hero > *{ position:relative; z-index:2; }
     .hero::before{
       content:""; position:absolute; inset:0; z-index:0;
-      background-image:url("assets/hero-bg.jpg?v=1");
+      background-image:url("assets/hero-bg.jpg?v=2");
       background-size:cover; background-position:center;
       transform:scale(1.03);
       filter:brightness(.55) saturate(1.08);
@@ -166,7 +166,8 @@
       <p class="sub">Аватар, сценарии, монтаж и сопровождение. Нейтральный голубой неон, 3D-ощущение и чистая типографика.</p>
       <div class="header-actions" style="gap:10px;justify-content:center">
         <a class="btn" href="#pricing"><span>Смотреть цены</span></a>
-        <a class="btn ghost" href="#gallery"><span>Визуал</span></a>
+        <!-- Было .btn ghost — теперь как у соседних -->
+        <a class="btn" href="#gallery"><span>Визуал</span></a>
         <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Заказать в Telegram</span></a>
       </div>
     </section>
@@ -184,18 +185,40 @@
       </div>
     </section>
 
-    <!-- Gallery -->
+    <!-- Gallery: теперь 4 ролика -->
     <section id="gallery">
       <h2>Визуал оцифровки</h2>
       <div class="gallery">
-        <div class="imgcard vidwrap" data-src1="assets/gallery-1.mp4?v=9" data-src2="assets/assets/gallery-1.mp4?v=9" data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
+        <!-- 1 -->
+        <div class="imgcard vidwrap"
+             data-src1="assets/gallery-1.mp4?v=10" data-src2="assets/assets/gallery-1.mp4?v=10"
+             data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
           <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
-          <div class="poster"><img alt="Превью 1" /></div>
+          <div class="poster"><img alt="Превью 1"></div>
           <button class="sound" type="button">Звук</button>
         </div>
-        <div class="imgcard vidwrap" data-src1="assets/gallery-2.mp4?v=9" data-src2="assets/assets/gallery-2.mp4?v=9" data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
+        <!-- 2 -->
+        <div class="imgcard vidwrap"
+             data-src1="assets/gallery-2.mp4?v=10" data-src2="assets/assets/gallery-2.mp4?v=10"
+             data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
           <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
-          <div class="poster"><img alt="Превью 2" /></div>
+          <div class="poster"><img alt="Превью 2"></div>
+          <button class="sound" type="button">Звук</button>
+        </div>
+        <!-- 3 (новый) -->
+        <div class="imgcard vidwrap"
+             data-src1="assets/gallery-3.mp4?v=10" data-src2="assets/assets/gallery-3.mp4?v=10"
+             data-poster1="assets/IMG_3632.jpeg" data-poster2="">
+          <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
+          <div class="poster"><img alt="Превью 3"></div>
+          <button class="sound" type="button">Звук</button>
+        </div>
+        <!-- 4 (новый) -->
+        <div class="imgcard vidwrap"
+             data-src1="assets/gallery-4.mp4?v=10" data-src2="assets/assets/gallery-4.mp4?v=10"
+             data-poster1="assets/IMG_3633.jpeg" data-poster2="">
+          <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
+          <div class="poster"><img alt="Превью 4"></div>
           <button class="sound" type="button">Звук</button>
         </div>
       </div>
@@ -264,13 +287,16 @@
   <a class="fab" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" aria-label="Связаться в Telegram">Заказать в TG</a>
 
   <script>
+    // год в футере
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // появление секций
     const observer = new IntersectionObserver(entries=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target);} });
     }, {threshold:.12});
     document.querySelectorAll('section').forEach(s=>observer.observe(s));
 
+    // ripple на кнопках
     document.querySelectorAll('.btn,.fab').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
         const r = btn.getBoundingClientRect();
@@ -285,6 +311,7 @@
       });
     });
 
+    // бургер-меню
     (function(){
       const burger = document.querySelector('.burger');
       const drawer = document.getElementById('navDrawer');
@@ -299,6 +326,7 @@
       window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeD(); });
     })();
 
+    // Видеолоадер: 2 пути + постер + кнопка звука + lazy-play
     (function(){
       const wraps = document.querySelectorAll('.vidwrap');
       wraps.forEach(w=>{
