@@ -46,13 +46,13 @@ section{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier
 section.visible{opacity:1;transform:translateY(0)}
 
 /* === HERO full-bleed === */
-.hero-bleed{ /* тянем секцию на всю ширину и высоту */
+.hero-bleed{
   width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
   min-height:92vh; display:grid; place-items:center; position:relative; overflow:hidden;
 }
 .hero-bg{position:absolute; inset:0; z-index:0; overflow:hidden}
 .hero-bg .img{position:absolute; inset:-4% -2%; background:url("assets/hero-bg.jpg") center/cover no-repeat; filter:brightness(.55) saturate(1.08); transform:translateZ(0)}
-.hero-bg::after{ /* неоновая дымка */
+.hero-bg::after{
   content:""; position:absolute; inset:0;
   background:
    radial-gradient(60% 40% at 22% 10%, rgba(102,225,255,.25), transparent 60%),
@@ -60,10 +60,24 @@ section.visible{opacity:1;transform:translateY(0)}
    linear-gradient(180deg, rgba(3,6,10,.05), rgba(3,6,10,.65));
 }
 #neuronsCanvas{position:absolute; inset:0; z-index:1; pointer-events:none; filter:drop-shadow(0 0 12px rgba(102,225,255,.6))}
-.hero-inner{position:relative; z-index:2; text-align:center; padding:0 18px; max-width:1100px}
-h1{font-size: clamp(34px, 4.2vw, 56px); line-height:1.05; margin:0 0 12px}
+.hero-inner{position:relative; z-index:3; text-align:center; padding:0 18px; max-width:1100px}
+h1{font-size:clamp(34px,4.2vw,56px); line-height:1.05; margin:0 0 12px}
 .sub{font-size:18px;color:#cfe3ff}
 .hero-cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:18px}
+
+/* Floating faces (mobile) */
+.mobile-faces{position:absolute; inset:0; z-index:2; pointer-events:none; display:none}
+.mobile-faces .face{
+  position:absolute; width:24vw; max-width:130px; aspect-ratio:1/1; border-radius:50%;
+  overflow:hidden; opacity:.7; mix-blend-mode:screen;
+  filter:brightness(.9) saturate(1.1) drop-shadow(0 8px 24px rgba(0,0,0,.6));
+  animation:floatY 9s ease-in-out infinite;
+}
+.mobile-faces .face img{width:100%; height:100%; object-fit:cover; transform:scale(1.08)}
+.mobile-faces .f1{left:6vw; top:12vh; animation-duration:10s}
+.mobile-faces .f2{right:8vw; top:24vh; animation-duration:12s; animation-delay:-2s}
+.mobile-faces .f3{left:14vw; bottom:10vh; animation-duration:11s; animation-delay:-1s}
+@keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-14px)}100%{transform:translateY(0)}}
 
 /* Cards */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -71,45 +85,36 @@ h1{font-size: clamp(34px, 4.2vw, 56px); line-height:1.05; margin:0 0 12px}
 .card h3{margin-top:0}
 .card:hover{transform:translateY(-3px) rotateX(2deg) rotateY(-1deg); box-shadow:0 20px 50px rgba(0,0,0,.5)}
 
-/* Gallery 4 items */
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+/* Gallery / Carousel */
+.gallery h2{margin-bottom:14px}
+.carousel{position:relative}
+.track{transition:transform .35s ease}
+.slide{min-height:260px}
+
+/* video card */
 .imgcard{position:relative;overflow:hidden;border-radius:var(--rad);border:1px solid #142435;background:#081018;min-height:260px}
 .imgcard video,.imgcard img{width:100%;height:100%;object-fit:cover;display:block}
 .poster{position:absolute;inset:0;background:#0a121a;display:flex;align-items:center;justify-content:center}
 .poster img{width:100%;height:100%;object-fit:cover;filter:brightness(.95) saturate(1.05)}
-/* controls */
 .controls{position:absolute;left:12px;bottom:12px;display:flex;gap:8px;z-index:5}
 .ctrl{padding:8px 10px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:#eaf2ff;font-weight:800;cursor:pointer}
 .ctrl.active, .sound.active{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018}
 .sound{position:absolute;right:12px;bottom:12px;z-index:5;padding:8px 10px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:#eaf2ff;font-weight:800}
 
-/* Pricing */
-.price b{font-size:26px}
-.old{color:#92a6c2;text-decoration:line-through;font-size:14px}
+/* carousel nav */
+.nav{position:absolute;top:50%;transform:translateY(-50%);z-index:6;border:1px solid #173245;background:#0c1620;color:#eaf2ff;border-radius:12px;padding:10px 12px;cursor:pointer}
+.nav.prev{left:8px} .nav.next{right:8px}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.dot{width:8px;height:8px;border-radius:50%;background:#274357}
+.dot.active{background:linear-gradient(90deg,#66e1ff,#22c55e)}
 
-/* CTA */
-.cta{background:linear-gradient(180deg,#0b141e,#0a121a);border:1px solid #142435;border-radius:24px;padding:24px;box-shadow:var(--shadow);text-align:center}
-.cta h3{margin:0 0 8px}
-
-/* Footer */
-footer{border-top:1px solid #142435;padding:30px 0;color:#8aa0bb;text-align:center}
-
-/* Floating CTA */
-.fab{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900;border:1px solid #173245;box-shadow:0 12px 30px #0008;animation:breathe 2.8s ease-in-out infinite}
-@keyframes breathe{0%{transform:translateY(0)}50%{transform:translateY(-1px)}100%{transform:translateY(0)}}
-
-/* Burger + drawer */
-.header-actions{display:flex;align-items:center;gap:12px}
-.burger{display:none;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid #173245;background:transparent;color:var(--text);font-weight:800;cursor:pointer}
-.burger:active{transform:translateY(1px)}
-.nav-drawer{position:fixed;inset:0;z-index:70;pointer-events:none}
-.nav-drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s ease}
-.nav-drawer .panel{position:absolute;right:0;top:0;height:100%;width:min(84vw,360px);background:linear-gradient(180deg,#0b141e,#0a121a);border-left:1px solid #142435;padding:18px;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);box-shadow:-10px 0 30px #0007;display:flex;flex-direction:column;gap:10px}
-.nav-drawer .navlink{display:block;padding:12px 14px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:var(--text)}
-.nav-drawer .navlink.primary{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900}
-.nav-drawer.open{pointer-events:auto}
-.nav-drawer.open .backdrop{opacity:1}
-.nav-drawer.open .panel{transform:translateX(0)}
+/* Desktop layout for carousel (grid 2×2) */
+@media (min-width:769px){
+  .carousel{overflow:visible}
+  .track{display:grid;grid-template-columns:repeat(2,1fr);gap:18px; transform:none !important}
+  .slide{width:auto}
+  .nav,.dots{display:none}
+}
 
 /* Mobile */
 @media (max-width:1024px){ .hero-bleed{min-height:86vh} }
@@ -118,14 +123,22 @@ footer{border-top:1px solid #142435;padding:30px 0;color:#8aa0bb;text-align:cent
   .burger{display:inline-flex;z-index:60}
   .logoTitle{font-size:12px;letter-spacing:.2px;max-width:48vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .hero-bleed{min-height:64vh}
+  .mobile-faces{display:block}
   h1{font-size:clamp(24px,6vw,34px)}
   .sub{font-size:14px}
   .cards{grid-template-columns:1fr}
-  .gallery{grid-template-columns:1fr}
   .btn{padding:8px 12px;border-radius:12px;font-weight:700}
   .btn::before{display:none}
   .fab{right:12px;bottom:12px;padding:12px 14px}
+  /* slider mode */
+  .track{display:flex}
+  .slide{min-width:100%; padding:2px}
+  .carousel{overflow:hidden}
 }
+
+footer{border-top:1px solid #142435;padding:30px 0;color:#8aa0bb;text-align:center}
+.fab{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900;border:1px solid #173245;box-shadow:0 12px 30px #0008;animation:breathe 2.8s ease-in-out infinite}
+@keyframes breathe{0%{transform:translateY(0)}50%{transform:translateY(-1px)}100%{transform:translateY(0)}}
 a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:12px}
 </style>
 </head>
@@ -136,7 +149,6 @@ a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:
     <div class="logoTitle">DEMAKOV_AI_AVATAR</div>
     <div class="header-actions">
       <a class="btn ghost" href="#advantages"><span>Преимущества</span></a>
-      <a class="btn ghost" href="#learn"><span>Обучение</span></a>
       <a class="btn ghost" href="#pricing"><span>Тарифы</span></a>
       <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Связаться в TG</span></a>
     </div>
@@ -147,22 +159,28 @@ a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:
   </div>
 </header>
 
-<!-- Drawer -->
 <div id="navDrawer" class="nav-drawer" aria-hidden="true">
   <div class="backdrop"></div>
   <nav class="panel" role="menu">
     <a class="navlink" href="#advantages" role="menuitem">Преимущества</a>
     <a class="navlink" href="#gallery" role="menuitem">Визуал</a>
-    <a class="navlink" href="#learn" role="menuitem">Обучение</a>
     <a class="navlink" href="#pricing" role="menuitem">Тарифы</a>
     <a class="navlink primary" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" role="menuitem">Связаться в Telegram</a>
   </nav>
 </div>
 
-<!-- HERO full-bleed -->
+<!-- HERO -->
 <section class="hero-bleed">
   <div class="hero-bg"><div class="img" id="heroImg"></div></div>
   <canvas id="neuronsCanvas" aria-hidden="true"></canvas>
+
+  <!-- Парящие цифровые лица (мобайл) -->
+  <div class="mobile-faces" aria-hidden="true">
+    <div class="face f1"><img src="assets/IMG_3630.jpeg" alt=""></div>
+    <div class="face f2"><img src="assets/IMG_3631.jpeg" alt=""></div>
+    <div class="face f3"><img src="assets/IMG_3630.jpeg" alt=""></div>
+  </div>
+
   <div class="hero-inner">
     <h1>Цифровые клоны для быстрого и красивого контента</h1>
     <p class="sub">Аватар, сценарии, монтаж и сопровождение. Нейтральный голубой неон, 3D-ощущение и чистая типографика.</p>
@@ -188,131 +206,80 @@ a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:
     </div>
   </section>
 
-  <!-- Gallery 4 videos -->
+  <!-- Gallery as carousel on mobile, grid on desktop -->
   <section id="gallery">
     <h2>Визуал оцифровки</h2>
-    <div class="gallery">
-      <!-- 1 -->
-      <div class="imgcard vidwrap"
-           data-src1="assets/gallery-1.mp4?v=12" data-src2="assets/assets/gallery-1.mp4?v=12"
-           data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
-        <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
-        <div class="poster"><img alt="Превью 1"></div>
-        <div class="controls">
-          <button class="ctrl play">Пуск</button>
-          <button class="ctrl pause">Пауза</button>
-          <button class="ctrl stop">Стоп</button>
-        </div>
-        <button class="sound" type="button">Звук</button>
-      </div>
-      <!-- 2 -->
-      <div class="imgcard vidwrap"
-           data-src1="assets/gallery-2.mp4?v=12" data-src2="assets/assets/gallery-2.mp4?v=12"
-           data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
-        <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
-        <div class="poster"><img alt="Превью 2"></div>
-        <div class="controls">
-          <button class="ctrl play">Пуск</button>
-          <button class="ctrl pause">Пауза</button>
-          <button class="ctrl stop">Стоп</button>
-        </div>
-        <button class="sound" type="button">Звук</button>
-      </div>
-      <!-- 3 -->
-      <div class="imgcard vidwrap"
-           data-src1="assets/gallery-3.mp4?v=12" data-src2="assets/assets/gallery-3.mp4?v=12"
-           data-poster1="assets/IMG_3632.jpeg">
-        <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
-        <div class="poster"><img alt="Превью 3"></div>
-        <div class="controls">
-          <button class="ctrl play">Пуск</button>
-          <button class="ctrl pause">Пауза</button>
-          <button class="ctrl stop">Стоп</button>
-        </div>
-        <button class="sound" type="button">Звук</button>
-      </div>
-      <!-- 4 -->
-      <div class="imgcard vidwrap"
-           data-src1="assets/gallery-4.mp4?v=12" data-src2="assets/assets/gallery-4.mp4?v=12"
-           data-poster1="assets/IMG_3633.jpeg">
-        <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
-        <div class="poster"><img alt="Превью 4"></div>
-        <div class="controls">
-          <button class="ctrl play">Пуск</button>
-          <button class="ctrl pause">Пауза</button>
-          <button class="ctrl stop">Стоп</button>
-        </div>
-        <button class="sound" type="button">Звук</button>
-      </div>
-    </div>
-  </section>
 
-  <!-- Обучение -->
-  <section id="learn">
-    <h2>Обучение созданию цифровых клонов — 20 000 ₽</h2>
-    <div class="cards">
-      <article class="card">
-        <h3>Полный пайплайн</h3>
-        <p>От брифа и съёмки до готовых релизов: подготовка данных, аватар, голос, липсинк, свет/цвет, субтитры, экспорт.</p>
-      </article>
-      <article class="card">
-        <h3>Скорость и система</h3>
-        <p>Шаблоны сценариев, A/B-варианты, чек-листы, запуск контент-сетки: 15–30 роликов в месяц без хаоса и пересъёмов.</p>
-      </article>
-      <article class="card">
-        <h3>Материалы и поддержка</h3>
-        <p>Файлы, пресеты, примеры, рабочие таблицы. Ответы на вопросы и помощь с первым релизом.</p>
-      </article>
-    </div>
-    <div class="cta" style="margin-top:18px">
-      <h3>Хотите обучиться пайплайну под свой бренд?</h3>
-      <p style="color:#cfe3ff">Интенсив 3–4 часа в Zoom + материалы и шаблоны.</p>
-      <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Записаться на обучение</span></a>
-    </div>
-  </section>
+    <div class="carousel" id="galleryCarousel">
+      <div class="track">
+        <!-- 1 -->
+        <div class="slide">
+          <div class="imgcard vidwrap"
+               data-src1="assets/gallery-1.mp4?v=13" data-src2="assets/assets/gallery-1.mp4?v=13"
+               data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
+            <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
+            <div class="poster"><img alt="Превью 1"></div>
+            <div class="controls">
+              <button class="ctrl play">Пуск</button>
+              <button class="ctrl pause">Пауза</button>
+              <button class="ctrl stop">Стоп</button>
+            </div>
+            <button class="sound" type="button">Звук</button>
+          </div>
+        </div>
 
-  <!-- Pricing -->
-  <section id="pricing">
-    <h2>Тарифные пакеты</h2>
-    <div class="cards">
-      <article class="card">
-        <h3>МИНИ</h3>
-        <p class="price"><b>15 рилс — 25 000</b> <span class="muted">(≈ 1 666 ₽/рилс)</span></p>
-        <p class="price"><b>30 рилс — 35 000</b> <span class="muted">(≈ 1 166 ₽/рилс)</span></p>
-        <div class="old">Старая цена: 30 000 / 40 000</div>
-        <ul>
-          <li>Регистрация аккаунта</li><li>Подписка на 1 мес. (~36$)</li><li>Аватар до 3 шт.</li>
-          <li>Монтаж и озвучка, улучшение звука</li><li>Генерация ролика</li>
-          <li>Цветокоррекция, субтитры, музыка</li><li>Сопровождение</li><li>Нейрофотосессия</li>
-        </ul>
-        <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Выбрать МИНИ в TG</span></a>
-      </article>
-      <article class="card">
-        <h3>СТАНДАРТ</h3>
-        <p class="price"><b>15 рилс — 30 000</b> <span class="muted">(≈ 2 000 ₽/рилс)</span></p>
-        <p class="price"><b>30 рилс — 45 000</b> <span class="muted">(≈ 1 500 ₽/рилс)</span></p>
-        <div class="old">Старая цена: 35 000 / 50 000</div>
-        <ul>
-          <li>Регистрация аккаунта</li><li>Подписка на 1 мес. (~36$)</li><li>Аватар до 5 шт.</li>
-          <li>Монтаж и озвучка, улучшение звука</li><li>Генерация роликов</li>
-          <li>Цветокоррекция, субтитры, музыка, переходы</li><li>Футажи (2–5 шт.)</li>
-          <li>Сопровождение</li><li>Нейрофотосессия: 15 образов</li>
-        </ul>
-        <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Выбрать СТАНДАРТ в TG</span></a>
-      </article>
-      <article class="card">
-        <h3>МАКСИ</h3>
-        <p class="price"><b>15 рилс — 40 000</b> <span class="muted">(≈ 2 666 ₽/рилс)</span></p>
-        <p class="price"><b>30 рилс — 65 000</b> <span class="muted">(≈ 2 166 ₽/рилс)</span></p>
-        <div class="old">Старая цена: 50 000 / 75 000</div>
-        <ul>
-          <li>Регистрация аккаунта</li><li>Подписка на 1 мес. (~36$)</li><li>Аватар до 10 шт.</li>
-          <li>Монтаж и озвучка, улучшение звука</li><li>Генерация роликов</li>
-          <li>Цветокоррекция, субтитры, музыка, переходы</li><li>Футажи каждые 3–5 сек</li>
-          <li>Сопровождение</li><li>Нейрофотосессия: 30 образов</li>
-        </ul>
-        <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Выбрать МАКСИ в TG</span></a>
-      </article>
+        <!-- 2 -->
+        <div class="slide">
+          <div class="imgcard vidwrap"
+               data-src1="assets/gallery-2.mp4?v=13" data-src2="assets/assets/gallery-2.mp4?v=13"
+               data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
+            <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
+            <div class="poster"><img alt="Превью 2"></div>
+            <div class="controls">
+              <button class="ctrl play">Пуск</button>
+              <button class="ctrl pause">Пауза</button>
+              <button class="ctrl stop">Стоп</button>
+            </div>
+            <button class="sound" type="button">Звук</button>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="slide">
+          <div class="imgcard vidwrap"
+               data-src1="assets/gallery-3.mp4?v=13" data-src2="assets/assets/gallery-3.mp4?v=13"
+               data-poster1="assets/IMG_3632.jpeg">
+            <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
+            <div class="poster"><img alt="Превью 3"></div>
+            <div class="controls">
+              <button class="ctrl play">Пуск</button>
+              <button class="ctrl pause">Пауза</button>
+              <button class="ctrl stop">Стоп</button>
+            </div>
+            <button class="sound" type="button">Звук</button>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="slide">
+          <div class="imgcard vidwrap"
+               data-src1="assets/gallery-4.mp4?v=13" data-src2="assets/assets/gallery-4.mp4?v=13"
+               data-poster1="assets/IMG_3633.jpeg">
+            <video autoplay muted playsinline webkit-playsinline loop preload="metadata"></video>
+            <div class="poster"><img alt="Превью 4"></div>
+            <div class="controls">
+              <button class="ctrl play">Пуск</button>
+              <button class="ctrl pause">Пауза</button>
+              <button class="ctrl stop">Стоп</button>
+            </div>
+            <button class="sound" type="button">Звук</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="nav prev" aria-label="Назад">‹</button>
+      <button class="nav next" aria-label="Вперёд">›</button>
+      <div class="dots" aria-hidden="true"></div>
     </div>
   </section>
 </main>
@@ -327,150 +294,150 @@ a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:
 /* год в футере */
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* section reveal */
+/* reveal */
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target);} });
 },{threshold:.12});
 document.querySelectorAll('section').forEach(s=>observer.observe(s));
 
-/* ripple на кнопках */
+/* ripple */
 document.querySelectorAll('.btn,.fab').forEach(btn=>{
   btn.addEventListener('click', (e)=>{
     const r = btn.getBoundingClientRect();
-    const circle = document.createElement('span');
     const d = Math.max(r.width, r.height);
+    const circle = document.createElement('span');
     circle.className='ripple';
     circle.style.width=circle.style.height=d+'px';
     circle.style.left=(e.clientX - r.left - d/2)+'px';
     circle.style.top=(e.clientY - r.top - d/2)+'px';
-    btn.appendChild(circle);
-    setTimeout(()=>circle.remove(), 600);
+    btn.appendChild(circle); setTimeout(()=>circle.remove(), 600);
   });
 });
 
-/* бургер-меню */
+/* burger */
 (function(){
-  const burger = document.querySelector('.burger');
-  const drawer = document.getElementById('navDrawer');
-  if(!burger || !drawer) return;
-  const backdrop = drawer.querySelector('.backdrop');
-  const links = drawer.querySelectorAll('a');
-  function openD(){drawer.classList.add('open');burger.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
-  function closeD(){drawer.classList.remove('open');burger.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow=''}
-  burger.addEventListener('click', ()=> drawer.classList.contains('open') ? closeD() : openD());
-  backdrop.addEventListener('click', closeD);
-  links.forEach(a=>a.addEventListener('click', closeD));
-  window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeD(); });
+  const burger=document.querySelector('.burger'), drawer=document.getElementById('navDrawer');
+  if(!burger||!drawer) return;
+  const backdrop=drawer.querySelector('.backdrop'), links=drawer.querySelectorAll('a');
+  const open=()=>{drawer.classList.add('open');burger.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
+  const close=()=>{drawer.classList.remove('open');burger.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow=''};
+  burger.addEventListener('click',()=>drawer.classList.contains('open')?close():open());
+  backdrop.addEventListener('click',close); links.forEach(a=>a.addEventListener('click',close));
+  window.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
 })();
 
-/* ===== HERO: Parallax + Neuron Canvas ===== */
+/* HERO parallax + neuron canvas */
 (function(){
-  const canvas = document.getElementById('neuronsCanvas');
-  const ctx = canvas.getContext('2d');
-  let W=0,H=0, DPR=Math.min(2, window.devicePixelRatio||1);
-  let nodes=[], links=65, mouse={x:0,y:0,active:false}, raf;
-
-  function rand(a,b){ return a + Math.random()*(b-a); }
+  const canvas=document.getElementById('neuronsCanvas'), ctx=canvas.getContext('2d');
+  let W=0,H=0,DPR=Math.min(2,window.devicePixelRatio||1), nodes=[], links=65, mouse={x:0,y:0,active:false}, raf;
+  const rand=(a,b)=>a+Math.random()*(b-a);
   function resize(){
-    W = canvas.clientWidth = canvas.parentElement.clientWidth;
-    H = canvas.clientHeight = canvas.parentElement.clientHeight;
-    canvas.width = W*DPR; canvas.height = H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
-    const target = Math.min(120, Math.round((W*H)/23000)); // адаптивное кол-во
-    nodes.length = 0;
-    for (let i=0;i<target;i++){
-      nodes.push({x:rand(0,W), y:rand(0,H), vx:rand(-.25,.25), vy:rand(-.25,.25), r:rand(1.2,2.6)});
-    }
+    W=canvas.clientWidth=canvas.parentElement.clientWidth;
+    H=canvas.clientHeight=canvas.parentElement.clientHeight;
+    canvas.width=W*DPR; canvas.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+    const count=Math.min(120, Math.round((W*H)/23000));
+    nodes.length=0; for(let i=0;i<count;i++) nodes.push({x:rand(0,W),y:rand(0,H),vx:rand(-.25,.25),vy:rand(-.25,.25),r:rand(1.2,2.6)});
   }
   function step(){
     ctx.clearRect(0,0,W,H);
-    // линии
-    for (let i=0;i<nodes.length;i++){
-      const a=nodes[i];
-      a.x+=a.vx; a.y+=a.vy;
-      if(a.x<0||a.x>W) a.vx*=-1;
-      if(a.y<0||a.y>H) a.vy*=-1;
-      // узлы
-      ctx.beginPath();
-      ctx.arc(a.x, a.y, a.r, 0, Math.PI*2);
-      ctx.fillStyle='rgba(102,225,255,.85)';
-      ctx.shadowColor='rgba(102,225,255,.6)'; ctx.shadowBlur=8;
-      ctx.fill(); ctx.shadowBlur=0;
-      // связи
-      for (let j=i+1;j<Math.min(i+links,nodes.length);j++){
-        const b=nodes[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-        if(d<120){
-          const o=1 - d/120;
-          ctx.beginPath();
-          ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-          ctx.strokeStyle=`rgba(102,225,255,${0.15*o})`;
-          ctx.lineWidth=1; ctx.stroke();
-        }
-      }
+    for(let i=0;i<nodes.length;i++){
+      const a=nodes[i]; a.x+=a.vx; a.y+=a.vy; if(a.x<0||a.x>W)a.vx*=-1; if(a.y<0||a.y>H)a.vy*=-1;
+      ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(102,225,255,.85)'; ctx.shadowColor='rgba(102,225,255,.6)'; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+      for(let j=i+1;j<Math.min(i+links,nodes.length);j++){ const b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy); if(d<120){ const o=1-d/120; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.strokeStyle=`rgba(102,225,255,${0.15*o})`; ctx.lineWidth=1; ctx.stroke(); } }
     }
-    // лёгкий отклик на курсор
-    if(mouse.active){
-      nodes.forEach(n=>{ n.x += (mouse.x-n.x)*0.0008; n.y += (mouse.y-n.y)*0.0008; });
-    }
-    raf = requestAnimationFrame(step);
+    if(mouse.active){ nodes.forEach(n=>{ n.x+=(mouse.x-n.x)*0.0008; n.y+=(mouse.y-n.y)*0.0008; }); }
+    raf=requestAnimationFrame(step);
   }
   function parallax(e){
-    const img = document.getElementById('heroImg');
-    const xr = (e.clientX/window.innerWidth - .5)*8;
-    const yr = (e.clientY/window.innerHeight - .5)*8;
-    img.style.transform = `translate(${xr}px, ${yr}px) scale(1.03)`;
-    mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
-    clearTimeout(parallax._t);
-    parallax._t = setTimeout(()=>mouse.active=false, 150);
+    const img=document.getElementById('heroImg');
+    const xr=(e.clientX/window.innerWidth-.5)*8, yr=(e.clientY/window.innerHeight-.5)*8;
+    img.style.transform=`translate(${xr}px,${yr}px) scale(1.03)`;
+    mouse.x=e.clientX; mouse.y=e.clientY; mouse.active=true; clearTimeout(parallax._t); parallax._t=setTimeout(()=>mouse.active=false,150);
   }
-  window.addEventListener('mousemove', parallax, {passive:true});
-  window.addEventListener('resize', ()=>{ cancelAnimationFrame(raf); resize(); step(); });
+  window.addEventListener('mousemove',parallax,{passive:true});
+  window.addEventListener('resize',()=>{cancelAnimationFrame(raf); resize(); step();});
   resize(); step();
 })();
 
-/* ===== Видео: устойчивый автоллоад + постер + play/pause/stop + mute ===== */
+/* VIDEO loader + controls (expose helpers on element) */
+const videoHelpers = new WeakMap();
 (function(){
-  const wraps = document.querySelectorAll('.vidwrap');
-  wraps.forEach(w=>{
-    const v = w.querySelector('video');
-    const posterBox = w.querySelector('.poster');
-    const posterImg = posterBox.querySelector('img');
-    const btnMute = w.querySelector('.sound');
-    const btnPlay = w.querySelector('.play');
-    const btnPause = w.querySelector('.pause');
-    const btnStop = w.querySelector('.stop');
-    const srcs = [w.dataset.src1, w.dataset.src2].filter(Boolean);
-    const posters = [w.dataset.poster1, w.dataset.poster2].filter(Boolean);
+  document.querySelectorAll('.vidwrap').forEach(w=>{
+    const v=w.querySelector('video'), posterBox=w.querySelector('.poster'), posterImg=posterBox.querySelector('img');
+    const btnMute=w.querySelector('.sound'), btnPlay=w.querySelector('.play'), btnPause=w.querySelector('.pause'), btnStop=w.querySelector('.stop');
+    const srcs=[w.dataset.src1,w.dataset.src2].filter(Boolean);
+    const posters=[w.dataset.poster1,w.dataset.poster2].filter(Boolean);
+    if (posters.length) posterImg.src=posters[0];
 
-    if (posters.length) posterImg.src = posters[0];
-
-    const io = new IntersectionObserver(es=>{
-      es.forEach(e=>{ if(e.isIntersecting){ ensureSource(); safePlay(); io.unobserve(v); }});
-    },{threshold:.25});
-
-    let tried = 0;
     function ensureSource(){
       if (v.src) return;
-      function trySource(i){
+      let i=0;
+      function tryNext(){
         if(i>=srcs.length) return;
-        v.src = srcs[i]; v.load();
-        const t = setTimeout(()=>{ if(v.readyState < 2) { v.removeAttribute('src'); v.load(); trySource(i+1);} }, 1500);
-        v.onloadeddata = ()=>clearTimeout(t);
-        v.onerror = ()=>{ clearTimeout(t); v.removeAttribute('src'); v.load(); trySource(i+1); };
+        v.src=srcs[i++]; v.load();
+        const t=setTimeout(()=>{ if(v.readyState<2){ v.removeAttribute('src'); v.load(); tryNext(); } },1500);
+        v.onloadeddata=()=>clearTimeout(t);
+        v.onerror=()=>{ clearTimeout(t); v.removeAttribute('src'); v.load(); tryNext(); };
       }
-      trySource(tried++);
+      tryNext();
     }
     function safePlay(){ const p=v.play(); if(p && p.catch) p.catch(()=>{}); }
-    v.addEventListener('playing', ()=>{ posterBox.style.display='none'; });
+    function pause(){ v.pause(); }
+    function stop(){ v.pause(); v.currentTime=0; }
+    v.addEventListener('playing',()=>{ posterBox.style.display='none'; });
 
-    btnMute.addEventListener('click', ()=>{ v.muted = !v.muted; btnMute.classList.toggle('active', !v.muted); if(!v.paused) safePlay(); });
-    btnPlay.addEventListener('click', ()=>{ ensureSource(); safePlay(); btnPlay.classList.add('active'); setTimeout(()=>btnPlay.classList.remove('active'),200); });
-    btnPause.addEventListener('click', ()=>{ v.pause(); btnPause.classList.add('active'); setTimeout(()=>btnPause.classList.remove('active'),200); });
-    btnStop.addEventListener('click', ()=>{ v.pause(); v.currentTime = 0; btnStop.classList.add('active'); setTimeout(()=>btnStop.classList.remove('active'),200); });
+    btnMute.addEventListener('click',()=>{ v.muted=!v.muted; btnMute.classList.toggle('active', !v.muted); if(!v.paused) safePlay(); });
+    btnPlay.addEventListener('click',()=>{ ensureSource(); safePlay(); btnPlay.classList.add('active'); setTimeout(()=>btnPlay.classList.remove('active'),200); });
+    btnPause.addEventListener('click',()=>{ pause(); btnPause.classList.add('active'); setTimeout(()=>btnPause.classList.remove('active'),200); });
+    btnStop.addEventListener('click',()=>{ stop(); btnStop.classList.add('active'); setTimeout(()=>btnStop.classList.remove('active'),200); });
 
-    io.observe(v);
+    // expose
+    videoHelpers.set(v,{ensureSource,safePlay,pause,stop});
   });
 })();
 
+/* CAROUSEL (mobile) */
+(function(){
+  const carousel=document.getElementById('galleryCarousel');
+  const track=carousel.querySelector('.track');
+  const slides=[...track.children];
+  const prev=carousel.querySelector('.prev'), next=carousel.querySelector('.next');
+  const dotsBox=carousel.querySelector('.dots');
+  slides.forEach((_,i)=>{ const b=document.createElement('div'); b.className='dot'+(i===0?' active':''); b.addEventListener('click',()=>{index=i; update();}); dotsBox.appendChild(b); });
+  let index=0, startX=null, delta=0;
+
+  const isMobile=()=>window.matchMedia('(max-width:768px)').matches;
+
+  function update(){
+    const dots=[...dotsBox.children];
+    if(isMobile()){
+      track.style.transform=`translateX(${-index*100}%)`;
+      dots.forEach((d,i)=>d.classList.toggle('active',i===index));
+      slides.forEach((s,i)=>{
+        const v=s.querySelector('video'); const h=videoHelpers.get(v);
+        if(!h) return;
+        if(i===index){ h.ensureSource(); h.safePlay(); }
+        else { h.pause(); }
+      });
+    }else{
+      dots.forEach(d=>d.classList.remove('active'));
+      slides.forEach(s=>{ const v=s.querySelector('video'); const h=videoHelpers.get(v); if(h){ h.ensureSource(); h.safePlay(); } });
+      track.style.transform='none';
+    }
+  }
+
+  prev.addEventListener('click',()=>{ index=Math.max(0,index-1); update();});
+  next.addEventListener('click',()=>{ index=Math.min(slides.length-1,index+1); update();});
+
+  track.addEventListener('pointerdown',e=>{ if(!isMobile()) return; startX=e.clientX; delta=0; track.setPointerCapture(e.pointerId); track.style.transition='none'; });
+  track.addEventListener('pointermove',e=>{ if(startX==null||!isMobile()) return; delta=e.clientX-startX; const w=track.clientWidth; track.style.transform=`translateX(${ -index*100 + (delta/w*100)}%)`; });
+  const end=()=>{ if(startX==null||!isMobile()) return; track.style.transition='transform .35s ease'; if(Math.abs(delta)>track.clientWidth*0.18) index += (delta<0?1:-1); index=Math.max(0,Math.min(slides.length-1,index)); startX=null; delta=0; update(); };
+  track.addEventListener('pointerup',end); track.addEventListener('pointercancel',end);
+
+  window.addEventListener('resize',update);
+  // kick
+  update();
+})();
 </script>
 </body>
 </html>
