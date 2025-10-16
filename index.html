@@ -1,140 +1,144 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark light">
-  <title>DEMAKOV_AI_AVATAR — цифровые клоны и продакшн контента</title>
-  <meta name="description" content="Цифровые клоны, которые ускоряют производство контента: аватар, сценарии, монтаж, генерация, сопровождение и обучение." />
-  <link rel="preload" as="image" href="assets/hero-bg.jpg">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%230af%22/></svg>">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>DEMAKOV_AI_AVATAR — цифровые клоны и продакшн контента</title>
+<meta name="description" content="Цифровые клоны: аватар, сценарии, монтаж, генерация, сопровождение и обучение." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%230af%22/></svg>">
+<style>
+  :root{
+    --bg:#03060a; --bg2:#051019; --card:#0a121a; --muted:#8aa0bb; --text:#eaf2ff;
+    --neon:#66e1ff; --neon2:#22c55e; --accent:#a5f3fc;
+    --rad:20px; --shadow:0 12px 40px rgba(0,0,0,.45);
+    --edge:1px solid #142435;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+  body{
+    color:var(--text);
+    background:
+      radial-gradient(1200px 700px at 15% -10%, rgba(102,225,255,.10), transparent 55%),
+      radial-gradient(1000px 600px at 110% -10%, rgba(34,197,94,.08), transparent 55%),
+      linear-gradient(180deg, var(--bg), var(--bg2) 50%, var(--bg));
+    scroll-behavior:smooth;
+  }
+  a{color:var(--accent);text-decoration:none}
 
-  <style>
-    :root{
-      --bg:#03060a; --bg2:#051019; --card:#0a121a; --muted:#8aa0bb; --text:#eaf2ff;
-      --neon:#66e1ff; --neon2:#22c55e; --accent:#a5f3fc;
-      --rad:20px; --shadow:0 12px 40px rgba(0,0,0,.45);
-      --wrap:1320px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
-    body{
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 15% -10%, rgba(102,225,255,.10), transparent 55%),
-        radial-gradient(1000px 600px at 110% -10%, rgba(34,197,94,.08), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg2) 50%, var(--bg));
-      scroll-behavior:smooth;
-      color-scheme: dark;
-    }
-    a{color:var(--accent);text-decoration:none}
+  /* Header */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(130%) blur(10px);background:rgba(3,6,10,.65);border-bottom:var(--edge)}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 18px}
+  .header-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
+  .logoTitle{font-weight:900;letter-spacing:.6px;color:#cfe9ff;text-transform:uppercase;white-space:nowrap}
 
-    /* Header */
-    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(130%) blur(10px);background:rgba(3,6,10,.55);border-bottom:1px solid #142435}
-    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 18px}
-    .header-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
-    .logoTitle{font-weight:900;letter-spacing:.6px;color:#cfe9ff;text-transform:uppercase;white-space:nowrap}
+  /* Buttons */
+  .btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;border:1px solid #173245;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:800;letter-spacing:.2px;box-shadow:var(--shadow);cursor:pointer;overflow:hidden;transition:transform .25s ease,filter .25s ease}
+  .btn:hover{transform:translateY(-1px) scale(1.01);filter:saturate(1.1)}
+  .btn.ghost{background:transparent;color:var(--text)}
+  .btn::before{content:"";position:absolute;inset:-40% -20%;background:conic-gradient(from 0deg,#fff3,#0000 30%,#fff2 60%,#0000);transform:translateX(-100%);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .btn:hover::before{transform:translateX(0)}
+  .ripple{position:absolute;border-radius:50%;transform:scale(0);background:#fff5;animation:ripple .6s ease-out;pointer-events:none}
+  @keyframes ripple{to{transform:scale(12);opacity:0}}
 
-    /* Buttons */
-    .btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;border:1px solid #173245;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:800;letter-spacing:.2px;box-shadow:var(--shadow);cursor:pointer;overflow:hidden;transition:transform .25s ease,filter .25s ease}
-    .btn:hover{transform:translateY(-1px) scale(1.01);filter:saturate(1.1)}
-    .btn.ghost{background:#0c1620;color:var(--text);border-color:#173245}
-    .btn::before{content:"";position:absolute;inset:-40% -20%;background:conic-gradient(from 0deg,#fff3,#0000 30%,#fff2 60%,#0000);transform:translateX(-100%);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
-    .btn:hover::before{transform:translateX(0)}
-    .ripple{position:absolute;border-radius:50%;transform:scale(0);background:#fff5;animation:ripple .6s ease-out;pointer-events:none}
-    @keyframes ripple{to{transform:scale(12);opacity:0}}
+  /* Sections */
+  section{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);margin:70px 0}
+  section.visible{opacity:1;transform:translateY(0)}
 
-    /* Section reveal */
-    section{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);margin:70px 0}
-    section.visible{opacity:1;transform:translateY(0)}
+  /* HERO */
+  .hero{display:grid;place-items:center;text-align:center;padding:90px 0 40px;position:relative;overflow:hidden;z-index:0;min-height:58vh}
+  .hero > *{position:relative;z-index:2}
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background-image:url("assets/hero-bg.jpg");
+    background-size:cover;background-position:center;
+    filter:brightness(.5) saturate(1.05);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:1;
+    background:
+      radial-gradient(80% 60% at 20% 0% , rgba(102,225,255,.25), transparent 60%),
+      radial-gradient(60% 40% at 85% 15%, rgba(34,197,94,.18), transparent 60%),
+      linear-gradient(180deg, rgba(3,6,10,.10), rgba(3,6,10,.75));
+    pointer-events:none;
+  }
+  h1{font-size:48px;line-height:1.05;margin:0 0 12px}
+  .sub{font-size:18px;color:#cfe3ff}
 
-    /* HERO full-bleed */
-    .hero-bleed{
-      width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
-      min-height:92vh; display:grid; place-items:center; position:relative; overflow:hidden;
-    }
-    .hero-bg{position:absolute; inset:0; z-index:0; overflow:hidden}
-    .hero-bg .img{position:absolute; inset:-4% -2%; background:url("assets/hero-bg.jpg") center/cover no-repeat; filter:brightness(.55) saturate(1.08) contrast(1.02); transform:translateZ(0)}
-    .hero-bg::after{
-      content:""; position:absolute; inset:0;
-      background:
-        radial-gradient(60% 40% at 22% 10%, rgba(102,225,255,.25), transparent 60%),
-        radial-gradient(60% 40% at 80% 12%, rgba(34,197,94,.18), transparent 60%),
-        linear-gradient(180deg, rgba(3,6,10,.05), rgba(3,6,10,.65));
-    }
-    .hero-inner{position:relative; z-index:3; text-align:center; padding:0 18px; max-width:1100px}
-    h1{font-size:clamp(34px,4.2vw,56px); line-height:1.05; margin:0 0 12px}
-    .sub{font-size:18px;color:#cfe3ff}
-    .hero-cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:18px}
+  /* Cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:linear-gradient(180deg,#0b131b,#0a1118);border:var(--edge);border-radius:var(--rad);padding:18px;box-shadow:var(--shadow)}
+  .card h3{margin-top:0}
 
-    /* Burger + drawer (фикс белого фона) */
-    .header-actions{display:flex;align-items:center;gap:12px}
-    .burger{
-      display:none;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;
-      border:1px solid #173245;background:#0c1620;color:var(--text);font-weight:800;cursor:pointer;
-      -webkit-tap-highlight-color: transparent; appearance:none;
-    }
-    .burger:active{transform:translateY(1px)}
-    .nav-drawer{position:fixed;inset:0;z-index:70;pointer-events:none}
-    .nav-drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .25s ease}
-    .nav-drawer .panel{position:absolute;right:0;top:0;height:100%;width:min(84vw,360px);background:linear-gradient(180deg,#0b141e,#0a121a);border-left:1px solid #142435;padding:18px;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);box-shadow:-10px 0 30px #0007;display:flex;flex-direction:column;gap:10px}
-    .nav-drawer .navlink{display:block;padding:12px 14px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:var(--text)}
-    .nav-drawer .navlink.primary{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900}
-    .nav-drawer.open{pointer-events:auto}
-    .nav-drawer.open .backdrop{opacity:1}
-    .nav-drawer.open .panel{transform:translateX(0)}
+  /* VIDEO CAROUSEL (адаптив, без обрезки) */
+  .carousel{position:relative}
+  .rail{display:flex;gap:16px;will-change:transform;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+  .slide{flex:0 0 100%}
+  @media(min-width:1024px){ .slide{flex-basis:50%} }
 
-    /* Cards */
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:linear-gradient(180deg,#0b131b,#0a1118);border:1px solid #142435;border-radius:var(--rad);padding:18px;box-shadow:var(--shadow)}
-    .card h3{margin-top:0}
+  .frame{
+    position:relative;width:100%;
+    height:clamp(340px, 60vh, 720px); /* стабильная высота на всех экранах */
+    background:#0b141e;border:var(--edge);border-radius:18px;
+    overflow:hidden;display:grid;place-items:center;
+  }
+  .frame video{width:100%;height:100%;object-fit:contain;background:#000} /* НИКАКОЙ обрезки */
+  .frame .poster{position:absolute;inset:0;display:grid;place-items:center;background:#000}
+  .frame .poster img{width:100%;height:100%;object-fit:contain;filter:contrast(1.02) saturate(1.02)}
+  .vbtns{position:absolute;left:16px;bottom:16px;display:flex;gap:10px;z-index:5}
+  .vbtn{padding:8px 12px;border-radius:12px;background:#0c1620;color:#eaf2ff;border:1px solid #173245;font-weight:800}
+  .sound.active{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018}
 
-    /* Gallery / Carousel (десктоп и мобайл) */
-    .carousel{position:relative; overflow:hidden}
-    .track{display:flex; transition:transform .35s ease}
-    .slide{min-width:100%; padding:2px}
-    @media (min-width:1024px){
-      .slide{min-width:50%} /* 2 карточки на экране на десктопе */
-    }
+  .dots{display:flex;justify-content:center;gap:8px;margin-top:12px}
+  .dot{width:9px;height:9px;border-radius:50%;background:#2b4357;border:1px solid #173245;opacity:.7}
+  .dot.active{background:#5ee2ff;opacity:1}
 
-    /* video card */
-    .imgcard{position:relative;overflow:hidden;border-radius:var(--rad);border:1px solid #142435;background:#081018;aspect-ratio:16/9}
-    .imgcard video,.imgcard img{width:100%;height:100%;object-fit:cover;display:block}
-    .poster{position:absolute;inset:0;background:#0a121a;display:flex;align-items:center;justify-content:center}
-    .poster img{width:100%;height:100%;object-fit:cover;filter:brightness(.95) saturate(1.05)}
-    .controls{position:absolute;left:12px;bottom:12px;display:flex;gap:8px;z-index:5}
-    .ctrl,.sound{padding:8px 10px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:#eaf2ff;font-weight:800;cursor:pointer}
-    .sound{position:absolute;right:12px;bottom:12px}
-    .ctrl.active,.sound.active{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018}
+  .nav{position:absolute;inset:0;pointer-events:none}
+  .arrow{position:absolute;top:50%;transform:translateY(-50%);pointer-events:auto;border:var(--edge);background:#0c1620;color:#eaf2ff;border-radius:14px;width:42px;height:42px;display:grid;place-items:center}
+  .arrow.r{right:8px}.arrow.l{left:8px}
+  .arrow svg{opacity:.9}
 
-    /* carousel nav */
-    .nav{position:absolute;top:50%;transform:translateY(-50%);z-index:6;border:1px solid #173245;background:#0c1620;color:#eaf2ff;border-radius:12px;padding:10px 12px;cursor:pointer}
-    .nav.prev{left:8px} .nav.next{right:8px}
-    .dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
-    .dot{width:8px;height:8px;border-radius:50%;background:#274357}
-    .dot.active{background:linear-gradient(90deg,#66e1ff,#22c55e)}
+  /* Pricing & Education */
+  .price b{font-size:26px}
+  .old{color:#92a6c2;text-decoration:line-through;font-size:14px}
+  .cta{background:linear-gradient(180deg,#0b141e,#0a121a);border:var(--edge);border-radius:24px;padding:24px;box-shadow:var(--shadow);text-align:center}
+  .edu{background:linear-gradient(180deg,#0b141e,#0a121a);border:var(--edge);border-radius:24px;padding:24px;box-shadow:var(--shadow)}
 
-    /* Mobile tweaks */
-    @media (max-width:768px){
-      header .header-actions{display:none}
-      .burger{display:inline-flex;z-index:60}
-      .logoTitle{font-size:12px;letter-spacing:.2px;max-width:48vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-      .hero-bleed{min-height:64vh}
-      h1{font-size:clamp(24px,6vw,34px)}
-      .sub{font-size:14px}
-      .cards{grid-template-columns:1fr}
-      .btn{padding:8px 12px;border-radius:12px;font-weight:700}
-      .btn::before{display:none}
-      .fab{right:12px;bottom:12px;padding:12px 14px}
-    }
+  /* Footer */
+  footer{border-top:var(--edge);padding:30px 0;color:#8aa0bb;text-align:center}
 
-    footer{border-top:1px solid #142435;padding:30px 0;color:#8aa0bb;text-align:center}
-    .fab{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900;border:1px solid #173245;box-shadow:0 12px 30px #0008;animation:breathe 2.8s ease-in-out infinite}
-    @keyframes breathe{0%{transform:translateY(0)}50%{transform:translateY(-1px)}100%{transform:translateY(0)}}
-    a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:12px}
-  </style>
+  /* Floating button */
+  .fab{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900;border:1px solid #173245;box-shadow:0 12px 30px #0008;animation:breathe 2.8s ease-in-out infinite}
+  @keyframes breathe{0%{transform:translateY(0)}50%{transform:translateY(-1px)}100%{transform:translateY(0)}}
+
+  /* Burger + drawer (тёмный фон, без белого) */
+  .header-actions{display:flex;align-items:center;gap:12px}
+  .burger{display:none;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:var(--text);font-weight:800;cursor:pointer}
+  .burger:active{transform:translateY(1px)}
+  .nav-drawer{position:fixed;inset:0;z-index:70;pointer-events:none}
+  .nav-drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s ease}
+  .nav-drawer .panel{position:absolute;right:0;top:0;height:100%;width:min(84vw,360px);background:linear-gradient(180deg,#0b141e,#0a121a);border-left:var(--edge);padding:18px;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);box-shadow:-10px 0 30px #0007;display:flex;flex-direction:column;gap:10px}
+  .nav-drawer .navlink{display:block;padding:12px 14px;border-radius:12px;border:1px solid #173245;background:#0c1620;color:var(--text)}
+  .nav-drawer .navlink.primary{background:linear-gradient(90deg,#66e1ff,#22c55e);color:#041018;font-weight:900}
+  .nav-drawer.open{pointer-events:auto}
+  .nav-drawer.open .backdrop{opacity:1}
+  .nav-drawer.open .panel{transform:translateX(0)}
+
+  /* Mobile tweaks */
+  @media (max-width:768px){
+    header .header-actions{display:none}
+    .burger{display:inline-flex;z-index:60}
+    .logoTitle{font-size:12px;letter-spacing:.2px;max-width:48vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .hero{min-height:56vh;padding:64px 0 24px}
+    h1{font-size:clamp(24px,6vw,34px)}
+    .sub{font-size:14px}
+    .cards{grid-template-columns:1fr}
+    .btn{padding:8px 12px;border-radius:12px;font-weight:700}
+    .btn::before{display:none}
+    .fab{right:12px;bottom:12px;padding:12px 14px}
+  }
+  a:focus,button:focus{outline:2px solid #5ae0ff;outline-offset:2px;border-radius:12px}
+</style>
 </head>
-
 <body>
   <!-- Header -->
   <header>
@@ -142,12 +146,14 @@
       <div class="logoTitle">DEMAKOV_AI_AVATAR</div>
       <div class="header-actions">
         <a class="btn ghost" href="#advantages"><span>Преимущества</span></a>
-        <a class="btn ghost" href="#training"><span>Обучение</span></a>
+        <a class="btn ghost" href="#education"><span>Обучение</span></a>
         <a class="btn ghost" href="#pricing"><span>Тарифы</span></a>
         <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Связаться в TG</span></a>
       </div>
       <button class="burger" aria-controls="navDrawer" aria-expanded="false" aria-label="Открыть меню">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
         <span>Меню</span>
       </button>
     </div>
@@ -158,28 +164,25 @@
     <div class="backdrop"></div>
     <nav class="panel" role="menu">
       <a class="navlink" href="#advantages" role="menuitem">Преимущества</a>
+      <a class="navlink" href="#education" role="menuitem">Обучение</a>
       <a class="navlink" href="#gallery" role="menuitem">Визуал</a>
-      <a class="navlink" href="#training" role="menuitem">Обучение</a>
       <a class="navlink" href="#pricing" role="menuitem">Тарифы</a>
       <a class="navlink primary" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" role="menuitem">Связаться в Telegram</a>
     </nav>
   </div>
 
-  <!-- HERO -->
-  <section class="hero-bleed">
-    <div class="hero-bg"><div class="img"></div></div>
-    <div class="hero-inner">
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero">
       <h1>Цифровые клоны для быстрого и красивого контента</h1>
       <p class="sub">Аватар, сценарии, монтаж и сопровождение. Нейтральный голубой неон, 3D-ощущение и чистая типографика.</p>
-      <div class="hero-cta">
+      <div class="header-actions" style="gap:10px;justify-content:center">
         <a class="btn" href="#pricing"><span>Смотреть цены</span></a>
         <a class="btn" href="#gallery"><span>Визуал</span></a>
         <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Заказать в Telegram</span></a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <main class="wrap">
     <!-- Advantages -->
     <section id="advantages">
       <h2>Преимущества цифрового клона</h2>
@@ -193,109 +196,95 @@
       </div>
     </section>
 
-    <!-- Gallery (carousel) -->
+    <!-- Gallery (карусель 4 видео, без обрезки) -->
     <section id="gallery">
       <h2>Визуал оцифровки</h2>
-      <div class="carousel" id="galleryCarousel">
-        <div class="track">
+
+      <div class="carousel" aria-roledescription="carousel">
+        <div class="rail" id="rail">
           <!-- 1 -->
           <div class="slide">
-            <div class="imgcard vidwrap"
-                 data-src1="assets/gallery-1.mp4?v=16" data-src2="assets/assets/gallery-1.mp4?v=16"
-                 data-poster1="assets/IMG_3630.jpeg" data-poster2="assets/assets/IMG_3630.jpeg">
-              <video muted playsinline webkit-playsinline loop preload="none"></video>
-              <div class="poster"><img alt="Превью 1"></div>
-              <div class="controls">
-                <button class="ctrl play">Пуск</button>
-                <button class="ctrl pause">Пауза</button>
-                <button class="ctrl stop">Стоп</button>
+            <div class="frame">
+              <video preload="metadata" muted playsinline webkit-playsinline loop poster="assets/IMG_3630.jpeg" data-src="assets/gallery-1.mp4"></video>
+              <div class="poster" aria-hidden="true"><img src="assets/IMG_3630.jpeg" alt=""></div>
+              <div class="vbtns">
+                <button class="vbtn play">Пуск</button>
+                <button class="vbtn pause">Пауза</button>
+                <button class="vbtn stop">Стоп</button>
               </div>
-              <button class="sound" type="button">Звук</button>
+              <button class="vbtn sound">Звук</button>
             </div>
           </div>
           <!-- 2 -->
           <div class="slide">
-            <div class="imgcard vidwrap"
-                 data-src1="assets/gallery-2.mp4?v=16" data-src2="assets/assets/gallery-2.mp4?v=16"
-                 data-poster1="assets/IMG_3631.jpeg" data-poster2="assets/assets/IMG_3631.jpeg">
-              <video muted playsinline webkit-playsinline loop preload="none"></video>
-              <div class="poster"><img alt="Превью 2"></div>
-              <div class="controls">
-                <button class="ctrl play">Пуск</button>
-                <button class="ctrl pause">Пауза</button>
-                <button class="ctrl stop">Стоп</button>
+            <div class="frame">
+              <video preload="metadata" muted playsinline webkit-playsinline loop poster="assets/IMG_3631.jpeg" data-src="assets/gallery-2.mp4"></video>
+              <div class="poster" aria-hidden="true"><img src="assets/IMG_3631.jpeg" alt=""></div>
+              <div class="vbtns">
+                <button class="vbtn play">Пуск</button>
+                <button class="vbtn pause">Пауза</button>
+                <button class="vbtn stop">Стоп</button>
               </div>
-              <button class="sound" type="button">Звук</button>
+              <button class="vbtn sound">Звук</button>
             </div>
           </div>
           <!-- 3 -->
           <div class="slide">
-            <div class="imgcard vidwrap"
-                 data-src1="assets/gallery-3.mp4?v=16" data-src2="assets/assets/gallery-3.mp4?v=16"
-                 data-poster1="assets/IMG_3632.jpeg">
-              <video muted playsinline webkit-playsinline loop preload="none"></video>
-              <div class="poster"><img alt="Превью 3"></div>
-              <div class="controls">
-                <button class="ctrl play">Пуск</button>
-                <button class="ctrl pause">Пауза</button>
-                <button class="ctrl stop">Стоп</button>
+            <div class="frame">
+              <video preload="metadata" muted playsinline webkit-playsinline loop poster="assets/IMG_3632.jpeg" data-src="assets/gallery-3.mp4"></video>
+              <div class="poster" aria-hidden="true"><img src="assets/IMG_3632.jpeg" alt=""></div>
+              <div class="vbtns">
+                <button class="vbtn play">Пуск</button>
+                <button class="vbtn pause">Пауза</button>
+                <button class="vbtn stop">Стоп</button>
               </div>
-              <button class="sound" type="button">Звук</button>
+              <button class="vbtn sound">Звук</button>
             </div>
           </div>
           <!-- 4 -->
           <div class="slide">
-            <div class="imgcard vidwrap"
-                 data-src1="assets/gallery-4.mp4?v=16" data-src2="assets/assets/gallery-4.mp4?v=16"
-                 data-poster1="assets/IMG_3633.jpeg">
-              <video muted playsinline webkit-playsinline loop preload="none"></video>
-              <div class="poster"><img alt="Превью 4"></div>
-              <div class="controls">
-                <button class="ctrl play">Пуск</button>
-                <button class="ctrl pause">Пауза</button>
-                <button class="ctrl stop">Стоп</button>
+            <div class="frame">
+              <video preload="metadata" muted playsinline webkit-playsinline loop poster="assets/IMG_3633.jpeg" data-src="assets/gallery-4.mp4"></video>
+              <div class="poster" aria-hidden="true"><img src="assets/IMG_3633.jpeg" alt=""></div>
+              <div class="vbtns">
+                <button class="vbtn play">Пуск</button>
+                <button class="vbtn pause">Пауза</button>
+                <button class="vbtn stop">Стоп</button>
               </div>
-              <button class="sound" type="button">Звук</button>
+              <button class="vbtn sound">Звук</button>
             </div>
           </div>
         </div>
-        <button class="nav prev" aria-label="Назад">‹</button>
-        <button class="nav next" aria-label="Вперёд">›</button>
-        <div class="dots" aria-hidden="true"></div>
+
+        <!-- arrows -->
+        <div class="nav" aria-hidden="true">
+          <button class="arrow l" id="prev" aria-label="Назад">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 4l-8 8 8 8" stroke="#9fc7ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="arrow r" id="next" aria-label="Вперёд">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 4l8 8-8 8" stroke="#9fc7ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </div>
+      <div class="dots" id="dots" aria-label="Слайды"></div>
     </section>
 
-    <!-- TRAINING -->
-    <section id="training">
+    <!-- Education -->
+    <section id="education">
       <h2>Обучение: как сделать своего цифрового клона (20 000 ₽)</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Что получите</h3>
-          <ul>
-            <li>Готовый пайплайн: от записи голоса до публикации Reels/Shorts.</li>
-            <li>Шаблоны сценариев, титров, субтитров, пресеты цветокоррекции.</li>
-            <li>Настройка аватара (словарь, интонации) и чек-листы релизов.</li>
-          </ul>
-          <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Записаться на обучение</span></a>
-        </article>
-        <article class="card">
-          <h3>Формат</h3>
-          <ul>
-            <li>2 онлайн-сессии × 90 мин + запись занятия.</li>
-            <li>Домашки и обратная связь в Telegram.</li>
-            <li>Помощь с первым сетом из 10–15 роликов.</li>
-          </ul>
-          <a class="btn ghost" href="#pricing"><span>Сравнить с тарифами</span></a>
-        </article>
-        <article class="card">
-          <h3>Зачем это вам</h3>
-          <ul>
-            <li>Снижаете стоимость ролика в 2–3 раза.</li>
-            <li>Стабильный образ и регулярные релизы.</li>
-            <li>Самостоятельность без подрядчиков.</li>
-          </ul>
-          <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Забронировать слот</span></a>
-        </article>
+      <div class="edu">
+        <h3 style="margin-top:0">Что получите</h3>
+        <ul>
+          <li>Пошаговый пайплайн — от записи голоса до публикации Reels/Shorts.</li>
+          <li>Шаблоны сценариев, титров, субтитров и пресеты цветокоррекции.</li>
+          <li>Настройка аватара (словарь, интонации) и чек-листы для стабильного качества.</li>
+          <li>Оптимизация под площадки (Instagram*, YouTube, TikTok) и A/B-тесты офферов.</li>
+          <li>Поддержка в Telegram 14 дней после обучения.</li>
+        </ul>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener">Записаться на обучение</a>
+          <a class="btn ghost" href="#pricing">Сравнить с пакетами</a>
+        </div>
       </div>
     </section>
 
@@ -343,6 +332,15 @@
         </article>
       </div>
     </section>
+
+    <!-- CTA -->
+    <section id="contact">
+      <div class="cta">
+        <h3>Готовы запустить своего цифрового клона?</h3>
+        <p style="color:#cfe3ff">Напишите в Telegram — обсудим цели, объём и сроки и подберём пакет.</p>
+        <a class="btn" href="https://t.me/demakovmikhail" target="_blank" rel="noopener"><span>Связаться в Telegram</span></a>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -352,145 +350,140 @@
   <!-- Floating CTA -->
   <a class="fab" href="https://t.me/demakovmikhail" target="_blank" rel="noopener" aria-label="Связаться в Telegram">Заказать в TG</a>
 
-  <script>
-    /* год в футере */
-    document.getElementById('year').textContent = new Date().getFullYear();
+<script>
+  // год
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* плавное появление секций */
-    const observer = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target);} });
-    }, {threshold:.12});
-    document.querySelectorAll('section').forEach(s=>observer.observe(s));
+  // появление секций
+  const obs = new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+  }),{threshold:.12});
+  document.querySelectorAll('section').forEach(s=>obs.observe(s));
 
-    /* ripple */
-    document.querySelectorAll('.btn,.fab').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
-        const r=btn.getBoundingClientRect(), d=Math.max(r.width,r.height);
-        const circle=document.createElement('span'); circle.className='ripple';
-        circle.style.width=circle.style.height=d+'px';
-        circle.style.left=(e.clientX-r.left-d/2)+'px';
-        circle.style.top=(e.clientY-r.top-d/2)+'px';
-        btn.appendChild(circle); setTimeout(()=>circle.remove(),600);
+  // ripple
+  document.querySelectorAll('.btn,.fab').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const r = btn.getBoundingClientRect();
+      const d = Math.max(r.width, r.height);
+      const circle = document.createElement('span');
+      circle.className='ripple';
+      circle.style.width=circle.style.height=d+'px';
+      circle.style.left=(e.clientX - r.left - d/2)+'px';
+      circle.style.top=(e.clientY - r.top - d/2)+'px';
+      btn.appendChild(circle);
+      setTimeout(()=>circle.remove(), 600);
+    });
+  });
+
+  // бургер
+  (function(){
+    const burger = document.querySelector('.burger');
+    const drawer = document.getElementById('navDrawer');
+    if(!burger || !drawer) return;
+    const backdrop = drawer.querySelector('.backdrop');
+    const links = drawer.querySelectorAll('a');
+    const open = ()=>{drawer.classList.add('open');burger.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
+    const close= ()=>{drawer.classList.remove('open');burger.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow=''};
+    burger.addEventListener('click', ()=> drawer.classList.contains('open') ? close() : open());
+    backdrop.addEventListener('click', close);
+    links.forEach(a=>a.addEventListener('click', close));
+    window.addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+  })();
+
+  // ====== КАРУСЕЛЬ С ВИДЕО (без обрезки, быстрая загрузка) ======
+  (function(){
+    const rail = document.getElementById('rail');
+    const slides = Array.from(rail.children);
+    const dotsWrap = document.getElementById('dots');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+
+    // точки
+    slides.forEach((_,i)=>{
+      const d=document.createElement('button');
+      d.className='dot'; d.setAttribute('aria-label','Слайд '+(i+1));
+      d.addEventListener('click',()=>go(i));
+      dotsWrap.appendChild(d);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    let index = 0;
+    const visibleCols = window.matchMedia('(min-width:1024px)').matches ? 2 : 1;
+    const maxIndex = Math.max(0, slides.length - visibleCols);
+
+    function update(){
+      const basis = visibleCols===2 ? 50 : 100;
+      rail.style.transform = `translateX(-${index * basis}%)`;
+      dots.forEach((d,i)=>d.classList.toggle('active', i===index));
+      // остановить все, играть только видимые
+      slides.forEach((s,i)=>{
+        const v = s.querySelector('video');
+        if(!v) return;
+        if(i<index || i>=index+visibleCols){ v.pause(); }
+        else if(!v.paused){ v.play().catch(()=>{}); }
       });
+    }
+
+    function go(i){ index = Math.min(Math.max(i,0), maxIndex); update(); }
+    prev.addEventListener('click', ()=>go(index-1));
+    next.addEventListener('click', ()=>go(index+1));
+
+    // ленивое подключение src + показ постера до стартa
+    const io = new IntersectionObserver(es=>{
+      es.forEach(e=>{
+        if(!e.isIntersecting) return;
+        const v = e.target;
+        const src = v.dataset.src;
+        if(src && !v.src){ v.src = src; v.load(); }
+        v.addEventListener('loadeddata', ()=> {
+          // убрать постер только когда реально стартовало
+          v.closest('.frame').querySelector('.poster').style.display='none';
+        }, {once:true});
+        // автоплей только для видимых в карусели
+        const si = slides.findIndex(s=>s.contains(v));
+        if(si>=index && si<index+visibleCols){
+          v.play().catch(()=>{});
+        }
+        io.unobserve(v);
+      });
+    },{threshold:.2});
+
+    // кнопки видео
+    slides.forEach(s=>{
+      const v = s.querySelector('video');
+      io.observe(v);
+      const f = s.querySelector('.frame');
+      const btnPlay = f.querySelector('.play');
+      const btnPause = f.querySelector('.pause');
+      const btnStop = f.querySelector('.stop');
+      const btnSound = f.querySelector('.sound');
+      const posterBox = f.querySelector('.poster');
+
+      btnPlay.addEventListener('click', ()=>{ v.play().catch(()=>{}); });
+      btnPause.addEventListener('click', ()=> v.pause());
+      btnStop.addEventListener('click', ()=>{ v.pause(); v.currentTime = 0; posterBox.style.display='grid'; setTimeout(()=>posterBox.style.display='none', 70); });
+      btnSound.addEventListener('click', ()=>{ v.muted = !v.muted; btnSound.classList.toggle('active', !v.muted); if(v.paused) v.play().catch(()=>{}); });
+
+      // когда видео начинает играть — скрыть постер
+      v.addEventListener('playing', ()=>{ posterBox.style.display='none'; });
     });
 
-    /* burger */
-    (function(){
-      const burger=document.querySelector('.burger'), drawer=document.getElementById('navDrawer');
-      if(!burger||!drawer) return;
-      const backdrop=drawer.querySelector('.backdrop'), links=drawer.querySelectorAll('a');
-      const open=()=>{drawer.classList.add('open');burger.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
-      const close=()=>{drawer.classList.remove('open');burger.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow=''};
-      burger.addEventListener('click',()=>drawer.classList.contains('open')?close():open());
-      backdrop.addEventListener('click',close); links.forEach(a=>a.addEventListener('click',close));
-      window.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
-    })();
+    // свайпы на мобилке
+    let sx=0, dx=0;
+    rail.addEventListener('pointerdown', e=>{ sx=e.clientX; rail.setPointerCapture(e.pointerId); });
+    rail.addEventListener('pointermove', e=>{ if(!sx) return; dx=e.clientX-sx; });
+    rail.addEventListener('pointerup', ()=>{ if(Math.abs(dx)>40){ dx<0?go(index+1):go(index-1); } sx=0; dx=0; });
 
-    /* VIDEO: ленивый лоадер + пуск/пауза/стоп/звук */
-    (function(){
-      document.querySelectorAll('.vidwrap').forEach(w=>{
-        const v=w.querySelector('video'),
-              posterBox=w.querySelector('.poster'),
-              posterImg=posterBox.querySelector('img'),
-              bPlay=w.querySelector('.play'),
-              bPause=w.querySelector('.pause'),
-              bStop=w.querySelector('.stop'),
-              bSound=w.querySelector('.sound');
+    // колесо мыши горизонтально
+    rail.addEventListener('wheel', e=>{
+      if(Math.abs(e.deltaX) + Math.abs(e.deltaY) < 1) return;
+      e.preventDefault();
+      if(e.deltaX>0 || e.deltaY>0) go(index+1); else go(index-1);
+    }, {passive:false});
 
-        const srcs=[w.dataset.src1,w.dataset.src2].filter(Boolean);
-        const posters=[w.dataset.poster1,w.dataset.poster2].filter(Boolean);
-        if(posters.length){ posterImg.src=posters[0]; v.poster=posters[0]; }
-
-        let loaded=false;
-        function loadIfNeeded(){
-          if(loaded) return;
-          let i=0;
-          const tryNext=()=>{
-            if(i>=srcs.length) return;
-            v.src=srcs[i++]; v.load();
-            const t=setTimeout(()=>{ if(v.readyState<2){ v.removeAttribute('src'); v.load(); tryNext(); } }, 1200);
-            v.onloadeddata=()=>{ clearTimeout(t); loaded=true; play(); };
-            v.onerror=()=>{ clearTimeout(t); v.removeAttribute('src'); v.load(); tryNext(); };
-          };
-          tryNext();
-        }
-        function play(){ const p=v.play(); if(p && p.catch) p.catch(()=>{}); }
-        function pause(){ v.pause(); }
-        function stop(){ v.pause(); v.currentTime=0; posterBox.style.display=''; }
-
-        v.addEventListener('playing', ()=>{ posterBox.style.display='none'; });
-
-        bPlay.addEventListener('click', ()=>{ loadIfNeeded(); play(); bPlay.classList.add('active'); setTimeout(()=>bPlay.classList.remove('active'),180); });
-        bPause.addEventListener('click', ()=>{ pause(); bPause.classList.add('active'); setTimeout(()=>bPause.classList.remove('active'),180); });
-        bStop.addEventListener('click', ()=>{ stop(); bStop.classList.add('active'); setTimeout(()=>bStop.classList.remove('active'),180); });
-        bSound.addEventListener('click', ()=>{ v.muted=!v.muted; bSound.classList.toggle('active',!v.muted); if(!v.paused) play(); });
-
-        const io=new IntersectionObserver(es=>{
-          es.forEach(e=>{
-            if(e.isIntersecting){ loadIfNeeded(); play(); }
-            else{ pause(); }
-          });
-        },{threshold:.25, rootMargin:'160px 0px'});
-        io.observe(w);
-      });
-    })();
-
-    /* Carousel с адаптивным количеством карточек */
-    (function(){
-      const carousel=document.getElementById('galleryCarousel');
-      const track=carousel.querySelector('.track');
-      const slides=[...track.children];
-      const prev=carousel.querySelector('.prev'), next=carousel.querySelector('.next');
-      const dotsBox=carousel.querySelector('.dots');
-
-      function perView(){ return window.innerWidth>=1024 ? 2 : 1; }
-      function pages(){ return Math.ceil(slides.length/perView()); }
-
-      // точки
-      function buildDots(){
-        dotsBox.innerHTML='';
-        for(let i=0;i<pages();i++){
-          const d=document.createElement('div'); d.className='dot'+(i===page?' active':'');
-          d.addEventListener('click',()=>{ page=i; update(); });
-          dotsBox.appendChild(d);
-        }
-      }
-
-      let page=0, startX=null, delta=0;
-
-      function update(){
-        const pv=perView();
-        const shift = -(page*100);
-        track.style.transform=`translateX(${shift}%)`;
-        // обновить активную точку
-        [...dotsBox.children].forEach((d,i)=>d.classList.toggle('active',i===page));
-        // ограничить границы
-        page=Math.max(0, Math.min(page, pages()-1));
-      }
-
-      prev.addEventListener('click',()=>{ page=Math.max(0,page-1); update(); });
-      next.addEventListener('click',()=>{ page=Math.min(pages()-1,page+1); update(); });
-
-      // свайпы
-      track.addEventListener('pointerdown',e=>{ startX=e.clientX; delta=0; track.setPointerCapture(e.pointerId); track.style.transition='none'; });
-      track.addEventListener('pointermove',e=>{
-        if(startX==null) return;
-        delta=e.clientX-startX; const w=track.clientWidth;
-        const pv=perView(); const base=-(page*100); const move=delta/w*100;
-        track.style.transform=`translateX(${base+move}%)`;
-      });
-      const end=()=>{
-        if(startX==null) return;
-        track.style.transition='transform .35s ease';
-        if(Math.abs(delta)>track.clientWidth*0.15) page += (delta<0?1:-1);
-        page=Math.max(0,Math.min(pages()-1,page));
-        startX=null; delta=0; update();
-      };
-      track.addEventListener('pointerup',end); track.addEventListener('pointercancel',end);
-
-      window.addEventListener('resize',()=>{ buildDots(); update(); });
-      buildDots(); update();
-    })();
-  </script>
+    update();
+    window.addEventListener('resize', ()=>location.reload()); // быстрый ресет расчёта колонок
+  })();
+</script>
 </body>
 </html>
